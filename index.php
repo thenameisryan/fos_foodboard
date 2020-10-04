@@ -22,7 +22,7 @@ if (isset($_GET['logout'])) {
     setcookie("active", "false", $hour);
     header("location: login.php");
 }
-
+//test
 ?>
 
 <!doctype html>

@@ -5,6 +5,7 @@ $datenow = date('d-m-Y H:i:s');
 $hour = time() + 3600 * 24 * 30;
 $errors = array(); 
 $randNum = mt_rand(1, 9999);
+//test
 
 // CONNECT TO THE DATABASE
 $db = mysqli_connect('localhost', 'root', '', 'fos_foodboard');
