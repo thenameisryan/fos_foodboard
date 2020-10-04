@@ -39,7 +39,7 @@ include("include/connectdb.php");
     <!-- ============================================================== -->
     <div class="splash-container">
         <div class="card ">
-            <div class="card-header text-center"><a class="navbar-brand" href="index.html">FoodBoard</a><span class="splash-description">Please enter your user information.</span></div>
+            <div class="card-header text-center"><a class="navbar-brand">FoodBoard</a><span class="splash-description">Please enter your user information.</span></div>
             <div class="card-body">
                 <form method="post" action="login.php">
                     <div class="form-group">
