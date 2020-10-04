@@ -1466,7 +1466,9 @@ Top Header
     margin: 0px;
 }
 
-.nav-user-name {}
+.nav-user-name {
+    text-transform: uppercase;
+}
 
 .nav-user-info {
     background-color: #5969ff;

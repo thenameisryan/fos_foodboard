@@ -1,6 +1,17 @@
 <?php
 include("include/connectdb.php");
 
+if(isset($_COOKIE["username"])) {
+    $user = $_COOKIE["username"];
+}
+if(isset($_SESSION["username"])) {
+    $user = $_SESSION["username"];
+}
+
+if(!isset($user)) {
+    header("location: pages/403-page.html");
+}
+
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['user_id']);
@@ -10,18 +21,6 @@ if (isset($_GET['logout'])) {
     setcookie("password", "", $hour);
     setcookie("active", "false", $hour);
     header("location: login.php");
-}
-
-if(isset($_COOKIE["username"])) {
-    $user = $_COOKIE["username"];
-}
-if(isset($_SESSION["username"])) {
-    $user = $_SESSION["username"];
-}
-
-if(!isset($user)) {
-    echo "Unauthorized access. Please <a href='login.php'>login</a> here.";
-    die();
 }
 
 ?>
