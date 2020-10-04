@@ -8,7 +8,8 @@ $randNum = mt_rand(1, 9999);
 //test
 
 // CONNECT TO THE DATABASE
-$db = mysqli_connect('localhost', 'root', '', 'fos_foodboard');
+//$db = mysqli_connect('localhost', 'root', '', 'fos_foodboard');
+$db = mysqli_connect('us-cdbr-east-02.cleardb.com', 'b28d97703c10fa', '7a57ff43', 'fos-foodboard');
 if (!$db) {
     die('Could not connect: ' . mysql_error());
 }
