@@ -4,7 +4,7 @@ include("assets/vendor/phpqrcode/qrlib.php");
 if(isset($_GET['qr'])){
     if($_GET['qr']=='t'){
 
-        $url = "www.facebook.com"; 
+        $url = "https://localhost/fos_foodboard/cus-landing.php?r='".$_SESSION['user_id']."'"; 
   
         // $path variable store the location where to
         // store image and $file creates directory name

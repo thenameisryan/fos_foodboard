@@ -270,6 +270,18 @@ if (isset($_POST['add_menu_item'])) {
 	if (empty($prod_name)) { array_push($errors, "* Product name is required"); }
 	if (empty($prod_price)) { array_push($errors, "* Product price is required"); }
 
+	// first check the database to make sure 
+  	// an item does not already exist with the same name
+  	echo $prod_check_query = "SELECT * FROM fos_prod WHERE prod_name='$prod_name' AND client_uid='$client_uid' LIMIT 1";
+  	$result = mysqli_query($db, $prod_check_query);
+  	$prod = mysqli_fetch_assoc($result);
+
+  	if ($prod) { // if user exists
+  	  	if ($prod['prod_name'] === $prod_name) {
+  	    	array_push($errors, "Product Name already exists.");
+  	  	}
+  	}
+
 	// Check if file already exists
 	// if (file_exists($target_file)) {
 	//     array_push($errors, "Sorry, file already exists.");

@@ -1,3 +1,12 @@
+<?php
+include("client/include/connectdb.php");
+
+$qry = "SELECT * FROM fos_prod 
+        WHERE client_uid = '".$_GET['r']."'";  
+$result_items = mysqli_query($db, $qry);
+$num_items = mysqli_num_rows($result_items);
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -214,46 +223,21 @@
   <section class="latest-product spad">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6">
-          <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="img/product/lp-1.jpg" alt="Card image cap">
-            <div class="card-block">
-              <h4 class="card-title">Vegetable</h4>
-              <p class="card-text">Price: RM1.00</p>
-              <a href="#" data-name="Vegetable" data-price="1.0" class="add-to-cart btn btn-primary">Add to cart</a>
+        <?php for($c=0; $c<$num_items; $c++){ ?>
+        <?php $prod = mysqli_fetch_assoc($result_items);?>
+        <?php $client_img_path = "client/".$prod['prod_image'];?>
+        <?php $client_prod_price = number_format(($prod['prod_price']*1.0),2);?>
+          <div class="col-lg-4 col-md-6">
+            <div class="card" style="width: 20rem;">
+             <img class="card-img-top" src="<?php echo $client_img_path?>" alt="Card image cap">
+              <div class="card-block">
+                <h4 class="card-title"><?php echo $prod['prod_name'];?></h4>
+                <p class="card-text">Price: RM<?php echo $client_prod_price;?></p>
+                <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary">Add to cart</a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="img/product/lp-2.jpg" alt="Card image cap">
-            <div class="card-block">
-              <h4 class="card-title">Capsaicin</h4>
-              <p class="card-text">Price: RM10.00</p>
-              <a href="#" data-name="Capsaicin" data-price="10.0" class="add-to-cart btn btn-primary">Add to cart</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="img/product/lp-3.jpg" alt="Card image cap">
-            <div class="card-block">
-              <h4 class="card-title">Chicken</h4>
-              <p class="card-text">Price: RM3.85</p>
-              <a href="#" data-name="Chicken" data-price="3.85" class="add-to-cart btn btn-primary">Add to cart</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="img/product/alert.png" alt="Card image cap">
-            <div class="card-block">
-              <h4 class="card-title">Orange</h4>
-              <p class="card-text">Price: RM2.00</p>
-              <a href="#" data-name="Orange" data-price="2.0" class="add-to-cart btn btn-primary">Add to cart</a>
-            </div>
-          </div>
-        </div>
+        <?php } ?>
         <!-- <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
