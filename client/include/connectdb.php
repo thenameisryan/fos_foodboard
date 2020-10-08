@@ -255,45 +255,49 @@ if (isset($_POST['create_new_user'])) {
   }
 }
 // ADD NEW PRODUCT
-if (isset($_POST['add_new_prod'])) {
+if (isset($_POST['add_menu_item'])) {
  	// receive all input values from the form
+	$client_uid = mysqli_real_escape_string($db, $_SESSION['user_id']);
  	$prod_name = mysqli_real_escape_string($db, $_POST['prod_name']);
- 	$prod_price = mysqli_real_escape_string($db, $_POST['prod_price']);
- 	$prod_cat = mysqli_real_escape_string($db, $_POST['prod_cat']);
- 	$prod_desc = mysqli_real_escape_string($db, $_POST['prod_desc']);
-	$target_dir = "img/uploads/";
+	$prod_desc = mysqli_real_escape_string($db, $_POST['prod_desc']);
+	$prod_price = mysqli_real_escape_string($db, $_POST['prod_price']);
+	$target_dir = "assets/uploads/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-  // form validation: ensure that the form is correctly filled ...
-  // by adding (array_push()) corresponding error unto $errors array
-  if (empty($prod_name)) { array_push($errors, "* Product name is required"); }
-  if (empty($prod_price)) { array_push($errors, "* Product price is required"); }
-  if (empty($prod_cat)) { array_push($errors, "* Product category is required"); }
+	// form validation: ensure that the form is correctly filled ...
+	// by adding (array_push()) corresponding error unto $errors array
+	if (empty($prod_name)) { array_push($errors, "* Product name is required"); }
+	if (empty($prod_price)) { array_push($errors, "* Product price is required"); }
 
-// // Check if file already exists
-// if (file_exists($target_file)) {
-//     array_push($errors, "Sorry, file already exists.");
-//     $uploadOk = 0;
-// }
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 1000000) {
-    array_push($errors, "Sorry, your file is too large.");
-}
-// Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-	array_push($errors, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
-}
+	// Check if file already exists
+	// if (file_exists($target_file)) {
+	//     array_push($errors, "Sorry, file already exists.");
+	//     $uploadOk = 0;
+	// }
 
-  if (count($errors) == 0) {
-  	move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-  	$query = "INSERT INTO product (product_name ,product_desc, product_image,product_category, product_price, product_date_added) 
-  			  VALUES('$prod_name','$prod_desc', '$target_file','$prod_cat', '$prod_price','$datenow')";
-  	mysqli_query($db, $query);
-  	$_SESSION['success'] = "Successfully added new product into the database.";
-  	header('location: product_list.php?cat=all');
-  }
+	// Check file size
+	if ($_FILES["fileToUpload"]["size"] > 1000000) {
+		array_push($errors, "Sorry, your file is too large.");
+	}
+
+	// // Allow certain file formats
+	if(empty($_FILES["fileToUpload"]["name"])){
+
+	}else{
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+		&& $imageFileType != "gif" ) {
+			array_push($errors, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+		}
+	}
+
+	if (count($errors) == 0) {
+		move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+		$query = "INSERT INTO fos_prod (client_uid, prod_name , prod_image, prod_desc, prod_price, date_created) 
+				VALUES('$client_uid','$prod_name','$target_file','$prod_desc', '$prod_price','$datenow')";
+		mysqli_query($db, $query);
+		header('location: menu-items.php');
+	}
 }
 // ADD NEW BLOG
 if (isset($_POST['add_new_blog'])) {
