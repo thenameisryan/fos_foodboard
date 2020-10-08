@@ -1,3 +1,13 @@
+<?php
+include("client/include/connectdb.php");
+$qry = "SELECT * FROM fos_landing 
+            INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
+            WHERE client_uid = '".$_GET['r']."'";  
+$results = mysqli_query($db, $qry);
+$landing = mysqli_fetch_assoc($results);
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -44,23 +54,20 @@
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <!-- you were doing this half way cus-landing -->
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-            <rect width="100%" height="100%" fill="#777" /></svg>
+        <img class="d-block w-100" src="<?php $new_path = "client/".$landing['landing_image']; echo $new_path;?>" alt="First slide">
           <div class="container">
             <div class="carousel-caption text-left">
-              <h1>Ryan's Burger Place</h1>
-              <p>Inspired by ShakeShack, In-N-Out and the likes, we decided that Malaysia needed its own version too.
-                So, we started with one simple objective. Sell a really good, juicy burger on a fresh bun. No shortcuts.
+              <h1><?php echo $landing['client_res_name'];?></h1>
+              <p><?php echo $landing['landing_desc'];?>
               </p>
             </div>
           </div>
         </div>
-        <div class="carousel-item">
+        <!-- <div class="carousel-item">
           <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
             <rect width="100%" height="100%" fill="#777" /></svg>
@@ -74,16 +81,14 @@
               <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="sr-only">Previous</span> </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+        <span class="sr-only">Next</span> </a>
     </div>
 
 
@@ -92,7 +97,6 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
     <div class="container marketing">
-
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="col-lg-4">
@@ -102,7 +106,7 @@
             <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
           </svg>
           <h2></h2>
-          <p><a class="btn btn-secondary" href="cus-menu.php" role="button">View Menu &raquo;</a></p>
+          <p><a class="btn btn-secondary" href="cus-menu.php?r=<?php echo $_GET['r'];?>" role="button">View Menu &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"

@@ -138,7 +138,7 @@ $num_items = mysqli_num_rows($result_items);
 <body>
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="landing.php"> Back</a>
+      <a class="navbar-brand" href="cus-landing.php?r=<?php echo $_GET['r'];?>"> Back</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -163,12 +163,12 @@ $num_items = mysqli_num_rows($result_items);
         All
         <!-- <span class="badge badge-pill bg-light align-text-bottom">17</span> -->
       </a>
-      <a class="nav-link" href="#">Appetizers</a>
+      <!-- <a class="nav-link" href="#">Appetizers</a>
       <a class="nav-link" href="#">Main</a>
       <a class="nav-link" href="#">Favourites</a>
       <a class="nav-link" href="#">Other</a>
       <a class="nav-link" href="#">Beverages</a>
-      <a class="nav-link" href="#">Alcohol</a>
+      <a class="nav-link" href="#">Alcohol</a> -->
     </nav>
   </div>
   <!-- End Sub-header -->

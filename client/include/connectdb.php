@@ -5,7 +5,12 @@ $datenow = date('d-m-Y H:i:s');
 $hour = time() + 3600 * 24 * 30;
 $errors = array(); 
 $randNum = mt_rand(1, 9999);
-//test
+
+//Defaults
+$landing_desc = "This is a default description. You are able to change this in the dashboard.";
+$landing_location = "This is a default location. You are able to change this in the dashboard.";
+$landing_contact = "000-0000000";
+$landing_image = "";
 
 // CONNECT TO THE DATABASE
 $db = mysqli_connect('localhost', 'root', '', 'fos_foodboard');
@@ -58,13 +63,17 @@ if (isset($_POST['reg_user'])) {
   		$password = base64_encode($password_1);//encrypt the password before saving in the database
   		$query = "INSERT INTO fos_client (client_username, client_email, client_pass, client_res_name, date_created, created_by) 
   				  VALUES('$username', '$email', '$password', '$restname', '$datenow', 'USER')";
-  		mysqli_query($db, $query);
-  		$query = "SELECT * FROM fos_client WHERE username='$username'";
-  		$results = mysqli_query($db, $query);
- 		$user = mysqli_fetch_assoc($results);
-  		$_SESSION['user_id'] = $user['uid'];
+		mysqli_query($db, $query);
+  		$query_user = "SELECT * FROM fos_client WHERE client_username='$username'";
+  		$results = mysqli_query($db, $query_user);
+		$user_info = mysqli_fetch_assoc($results);
+		$landing_id = $user_info['uid'];
+		$query_landing = "INSERT INTO fos_landing (client_uid, landing_desc, landing_location, landing_contact, date_created) 
+  				  VALUES('$landing_id', '$landing_desc', '$landing_location', '$landing_contact', '$datenow')";
+  		mysqli_query($db, $query_landing);
+  		$_SESSION['user_id'] = $user_info['uid'];
 		$_SESSION['username'] = $username;
-		$_SESSION['res_name'] = $user['client_res_name'];
+		$_SESSION['res_name'] = $user_info['client_res_name'];
   		$_SESSION['user_loggedin'] = "true";
   		header('location: index.php');
   	}
