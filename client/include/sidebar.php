@@ -55,9 +55,6 @@
 								<li class="nav-item">
 									<a class="nav-link" href="menu-items.php">Items</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="add-menu-items.php">Add to Menu</a>
-								</li>
 							</ul>
 						</div>
 					</li>

@@ -65,15 +65,15 @@ if(!isset($user)) {
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="page-header" id="top">
-                                    <h2 class="pageheader-title">Add to Menu </h2>
+                                    <h2 class="pageheader-title">Add to Menu Categories </h2>
                                     <p class="pageheader-text">Text goes in here.</p>
                                     <div class="page-breadcrumb">
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
                                                 <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Items</li>
-                                                <li class="breadcrumb-item active" aria-current="page">Add to Menu</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Add to Menu Categories</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -95,30 +95,14 @@ if(!isset($user)) {
                                 <div class="card">
                                     <h5 class="card-header">Add </h5>
                                     <div class="card-body">
-                                        <form method="post" action="add-menu-items.php" enctype="multipart/form-data">
+                                        <form method="post" action="add-menu-categories.php">
                                             <div class="form-group">
-                                                <label for="inputText1" class="col-form-label">Product Name</label>
-                                                <input id="inputText1" type="text" class="form-control" name="prod_name" value="<?php if(isset($_POST['prod_name'])) {echo $_POST['prod_name'];}?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Product Description</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="prod_desc" value="<?php if(isset($_POST['prod_desc'])) {echo $_POST['prod_desc'];}?>"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Product Price</label>
-                                                <div class="form-group input-group mb-3">
-                                                    <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                    <input type="number" class="form-control"
-                                                    id="currency-mask" name="prod_price" value="<?php if(isset($_POST['prod_price'])) {echo $_POST['prod_price'];}?>">
-                                                </div>
-                                            </div>
-                                            <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input" name="fileToUpload" id="fileToUpload">
-                                                <label class="custom-file-label" for="customFile">Product Image</label>
+                                                <label for="inputText1" class="col-form-label">Category Name</label>
+                                                <input id="inputText1" type="text" class="form-control" name="cat_name" value="<?php if(isset($_POST['cat_name'])) {echo $_POST['cat_name'];}?>">
                                             </div>
                                             <?php include('include/errors.php'); ?>
                                             <div class="form-group pt-2">
-                                                <button class="btn btn-block btn-primary" type="submit" name="add_menu_item">Add to Menu</button>
+                                                <button class="btn btn-block btn-primary" type="submit" name="add_menu_cat">Add to Menu</button>
                                             </div>
                                         </form>
                                     </div>

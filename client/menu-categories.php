@@ -1,7 +1,7 @@
 <?php
 include("include/connectdb.php");
 
-$qry = "SELECT * FROM fos_prod 
+$qry = "SELECT * FROM fos_cat 
         WHERE client_uid = '".$_SESSION['user_id']."'";  
 $result_items = mysqli_query($db, $qry);
 $num_items = mysqli_num_rows($result_items);
@@ -61,191 +61,96 @@ if(!isset($user)) {
         <!-- wrapper  -->
         <!-- ============================================================== -->
         <div class="dashboard-wrapper">
-            <div class="dashboard-ecommerce">
-                <div class="container-fluid dashboard-content ">
-                    <!-- ============================================================== -->
-                    <!-- pageheader  -->
-                    <!-- ============================================================== -->
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="page-header">
-                                <h2 class="pageheader-title">Items</p>
-                                <div class="page-breadcrumb">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">Items</li>
-                                        </ol>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- end pageheader  -->
-                    <!-- ============================================================== -->
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
-                            <div class="row">
-                            <?php for($c=0; $c<$num_items; $c++){ ?>
-							<?php $prod = mysqli_fetch_assoc($result_items);?>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="<?php echo $prod['prod_image'];?>" alt="" class="img-fluid"></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title"><?php echo $prod['prod_name'];?></h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <!-- .figure-caption -->
-                                        <figcaption class="figure-caption">
-                                            <p class="text-muted mb-0"><?php echo $prod['prod_desc'];?></p>
-                                        </figcaption>
-                                        <!-- /.figure-caption -->
-                                                <div class="product-price">RM<?php echo $prod['prod_price'];?></div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-light">Details</a>
-                                                <a href="#" class="btn btn-danger">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
-                            <div class="product-sidebar">
-                                <div class="product-sidebar-widget">
-                                    <h4 class="mb-0">Filter</h4>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <h4 class="product-sidebar-widget-title">Category</h4>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cat-1">
-                                        <label class="custom-control-label" for="cat-1">Categories #1</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cat-2">
-                                        <label class="custom-control-label" for="cat-2">Categories #2</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cat-3">
-                                        <label class="custom-control-label" for="cat-3">Categories #3</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cat-4">
-                                        <label class="custom-control-label" for="cat-4">Categories #4</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cat-5">
-                                        <label class="custom-control-label" for="cat-5">Categories #5</label>
-                                    </div>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <h4 class="product-sidebar-widget-title">Size</h4>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="size-1">
-                                        <label class="custom-control-label" for="size-1">Small</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="size-2">
-                                        <label class="custom-control-label" for="size-2">Medium</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="size-3">
-                                        <label class="custom-control-label" for="size-3">Large</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="size-4">
-                                        <label class="custom-control-label" for="size-4">Extra Large</label>
-                                    </div>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <h4 class="product-sidebar-widget-title">Brand</h4>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="brand-1">
-                                        <label class="custom-control-label" for="brand-1">Brand Name #1</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="brand-2">
-                                        <label class="custom-control-label" for="brand-2">Brand Name #2</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="brand-3">
-                                        <label class="custom-control-label" for="brand-3">Brand Name #3</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="brand-4">
-                                        <label class="custom-control-label" for="brand-4">Brand Name #4</label>
-                                    </div>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <h4 class="product-sidebar-widget-title">Color</h4>
-                                    <div class="custom-control custom-radio custom-color-blue ">
-                                        <input type="radio" id="color-1" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="color-1">Blue</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-color-red ">
-                                        <input type="radio" id="color-2" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="color-2">Red</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-color-yellow ">
-                                        <input type="radio" id="color-3" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="color-3">Yellow</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-color-black ">
-                                        <input type="radio" id="color-4" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="color-4">Black</label>
-                                    </div>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <h4 class="product-sidebar-widget-title">Price</h4>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="price-1">
-                                        <label class="custom-control-label" for="price-1">$$</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="price-2">
-                                        <label class="custom-control-label" for="price-2">$$$</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="price-3">
-                                        <label class="custom-control-label" for="price-3">$$$$</label>
-                                    </div>
-                                </div>
-                                <div class="product-sidebar-widget">
-                                    <a href="#" class="btn btn-outline-light">Reset Filter</a>
-                                </div>
+            <div class="container-fluid dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Categories <a href="add-menu-categories.php" class="btn btn-rounded btn-dark btn-xs"><i class="fas fa-plus"> Add </i></a></h2>
+                            <p class="pageheader-text">Text goes in here.</p>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                                    </ol>
+                                </nav>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
-                <!-- footer -->
+                <!-- end pageheader -->
                 <!-- ============================================================== -->
-                <?php
-                include("include/footer.php");
-                ?>
-                <!-- ============================================================== -->
-                <!-- end footer -->
-                <!-- ============================================================== -->
+                <div class="dashboard-short-list">
+                    <div class="row">
+                        <!-- ============================================================== -->
+                        <!-- shortable list  -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 co-12">
+                            <section class="card card-fluid">
+                                <h5 class="card-header drag-handle"> Menu Categories </h5>
+                                <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
+                                    <?php for($c=0; $c<$num_items; $c++){ ?>
+                                    <?php $cat = mysqli_fetch_assoc($result_items);?>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                        <span class="drag-indicator"></span>
+                                        <div> <?php echo $cat['cat_title'];?> </div>
+                                        <div class="btn-group ml-auto">
+                                            <button class="btn btn-sm btn-outline-light">Edit</button>
+                                            <div class="">
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </a>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Woohoo, You are readng this text in a modal! Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications, or completely custom content.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                                                <a href="#" class="btn btn-primary">Save changes</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                        <button class="btn btn-primary" type="submit" >Make Changes</button>
+                                    <?php } ?>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end shortable list  -->
+                    <!-- ============================================================== -->
+                </div>
             </div>
             <!-- ============================================================== -->
-            <!-- end wrapper  -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <?php
+            include("include/footer.php");
+            ?>
+            <!-- ============================================================== -->
+            <!-- end footer -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- end main wrapper -->
+        <!-- end wrapper -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
@@ -256,6 +161,9 @@ if(!isset($user)) {
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="assets/libs/js/main-js.js"></script>
+    <script src="assets/vendor/shortable-nestable/Sortable.min.js"></script>
+    <script src="assets/vendor/shortable-nestable/sort-nest.js"></script>
+    <script src="assets/vendor/shortable-nestable/jquery.nestable.js"></script>
 </body>
  
 </html>

@@ -104,7 +104,7 @@ if(!isset($user)) {
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                         <div class="section-block" id="buttons">
                             <h3 class="section-title">QR Code</h3>
                             <p>Customers can scan your QR Code to quickly access the menu.</p>
@@ -139,10 +139,10 @@ if(!isset($user)) {
                                 <!-- ============================================================== -->
                                 <!-- end qrcode -->
                                 <!-- ============================================================== -->
-                                <?php if(isset($_GET['qr'])){ ?>
+                                <?php if (isset($_GET['qr'])) { ?>
                                     <a download href="<?php echo $file; ?>" class="btn btn-rounded btn-primary">Download</a>
                                 <?php }else{ ?>
-                                    <a href="generateqrcode.php?qr=t" class="btn btn-rounded btn-primary">Generate your QR Code</a> 
+                                    <a href="generateqrcode.php?qr=t" class="btn btn-rounded btn-primary">Generate your QR Code</a>
                                 <?php } ?>
                                 
                                 

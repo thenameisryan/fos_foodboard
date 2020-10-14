@@ -7,10 +7,13 @@ $errors = array();
 $randNum = mt_rand(1, 9999);
 
 //Defaults
+/* Landing Page */
 $landing_desc = "This is a default description. You are able to change this in the dashboard.";
 $landing_location = "This is a default location. You are able to change this in the dashboard.";
 $landing_contact = "000-0000000";
 $landing_image = "";
+/* Categories */
+$cat_title = "All";
 
 // CONNECT TO THE DATABASE
 $db = mysqli_connect('localhost', 'root', '', 'fos_foodboard');
@@ -67,10 +70,13 @@ if (isset($_POST['reg_user'])) {
   		$query_user = "SELECT * FROM fos_client WHERE client_username='$username'";
   		$results = mysqli_query($db, $query_user);
 		$user_info = mysqli_fetch_assoc($results);
-		$landing_id = $user_info['uid'];
+		$client_uid_info = $user_info['uid'];
 		$query_landing = "INSERT INTO fos_landing (client_uid, landing_desc, landing_location, landing_contact, date_created) 
-  				  VALUES('$landing_id', '$landing_desc', '$landing_location', '$landing_contact', '$datenow')";
-  		mysqli_query($db, $query_landing);
+  				  VALUES('$client_uid_info', '$landing_desc', '$landing_location', '$landing_contact', '$datenow')";
+		mysqli_query($db, $query_landing);
+		$query_cat = "INSERT INTO fos_cat (client_uid, cat_title, date_created) 
+  				  VALUES('$client_uid_info', '$cat_title', '$datenow')";
+  		mysqli_query($db, $query_cat);
   		$_SESSION['user_id'] = $user_info['uid'];
 		$_SESSION['username'] = $username;
 		$_SESSION['res_name'] = $user_info['client_res_name'];
@@ -281,7 +287,7 @@ if (isset($_POST['add_menu_item'])) {
 
 	// first check the database to make sure 
   	// an item does not already exist with the same name
-  	echo $prod_check_query = "SELECT * FROM fos_prod WHERE prod_name='$prod_name' AND client_uid='$client_uid' LIMIT 1";
+  	$prod_check_query = "SELECT * FROM fos_prod WHERE prod_name='$prod_name' AND client_uid='$client_uid' LIMIT 1";
   	$result = mysqli_query($db, $prod_check_query);
   	$prod = mysqli_fetch_assoc($result);
 
@@ -319,6 +325,36 @@ if (isset($_POST['add_menu_item'])) {
 		mysqli_query($db, $query);
 		header('location: menu-items.php');
 	}
+}
+// ADD NEW CATEGORY
+if (isset($_POST['add_menu_cat'])) {
+	// receive all input values from the form
+   	$client_uid = mysqli_real_escape_string($db, $_SESSION['user_id']);
+	$cat_name = mysqli_real_escape_string($db, $_POST['cat_name']);
+   
+
+   // form validation: ensure that the form is correctly filled ...
+   // by adding (array_push()) corresponding error unto $errors array
+   if (empty($cat_name)) { array_push($errors, "* Category name is required"); }
+
+   // first check the database to make sure 
+	 // an item does not already exist with the same name
+	 $cat_check_query = "SELECT * FROM fos_cat WHERE cat_title='$cat_name' AND client_uid='$client_uid' LIMIT 1";
+	 $result = mysqli_query($db, $cat_check_query);
+	 $cat = mysqli_fetch_assoc($result);
+
+	 if ($cat) { // if user exists
+		   if ($prod['cat_title'] === $prod_name) {
+			 array_push($errors, "Category Name already exists.");
+		   }
+	 }
+
+   if (count($errors) == 0) {
+	   $query = "INSERT INTO fos_cat (client_uid, cat_title, date_created) 
+			   VALUES('$client_uid','$cat_name', '$datenow')";
+	   mysqli_query($db, $query);
+	   header('location: menu-categories.php');
+   }
 }
 // ADD NEW BLOG
 if (isset($_POST['add_new_blog'])) {

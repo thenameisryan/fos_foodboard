@@ -69,7 +69,7 @@ if(!isset($user)) {
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h2 class="pageheader-title">Items</p>
+                                <h2 class="pageheader-title">Items <a href="add-menu-items.php" class="btn btn-rounded btn-dark btn-xs"><i class="fas fa-plus"> Add </i></a></h2>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
