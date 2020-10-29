@@ -128,8 +128,8 @@ if(!isset($user)) {
                                             </div>
                                         </div>
                                     </li>
-                                        <button class="btn btn-primary" type="submit" >Make Changes</button>
                                     <?php } ?>
+                                    <button class="btn btn-primary" type="submit" >Make Changes</button>
                                 </ul>
                             </section>
                         </div>

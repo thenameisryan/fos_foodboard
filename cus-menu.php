@@ -6,6 +6,11 @@ $qry = "SELECT * FROM fos_prod
 $result_items = mysqli_query($db, $qry);
 $num_items = mysqli_num_rows($result_items);
 
+$qry_cat = "SELECT * FROM fos_cat 
+        WHERE client_uid = '".$_GET['r']."'";  
+$result_cat = mysqli_query($db, $qry_cat);
+$num_cat = mysqli_num_rows($result_cat);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -25,7 +30,19 @@ $num_items = mysqli_num_rows($result_items);
   <link rel="manifest" href="img/favicon/site.webmanifest">
   <!-- Bootstrap core CSS -->
   <link href="assets/dist/css/bootstrap.css" rel="stylesheet">
-
+  <script>
+  var mydata = 55;
+  var myname = "syed ali";
+  var userdata = {'id':mydata,'name':myname};
+      $.ajax({
+              type: "POST",
+              url: "cus-menu.php?<?php echo $_SESSION['user_id'];?>",
+              data:userdata, 
+              success: function(data){
+                  console.log(data);
+              }
+              });
+  </script>
   <style>
     .show-cart li {
       display: flex;
@@ -146,10 +163,10 @@ $num_items = mysqli_num_rows($result_items);
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Ryan's Burger Place</a>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Ryan's Burger Place <?php echo $_POST['mydata'];?></a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
+        <form class="form-inline mt-2 mt-md-0" method="get" action="cus-menu.php" id="searchForm">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -159,10 +176,13 @@ $num_items = mysqli_num_rows($result_items);
   <!-- Start Sub-header -->
   <div class="nav-scroller bg-white shadow-sm">
     <nav class="nav nav-underline">
+    <?php for($c=0; $c<$num_cat; $c++) { ?>
+    <?php $cat = mysqli_fetch_assoc($result_cat);?>
       <a class="nav-link active" href="#">
-        All
+        <?php echo $cat['cat_title'];?>
         <!-- <span class="badge badge-pill bg-light align-text-bottom">17</span> -->
       </a>
+    <?php } ?>  
       <!-- <a class="nav-link" href="#">Appetizers</a>
       <a class="nav-link" href="#">Main</a>
       <a class="nav-link" href="#">Favourites</a>
@@ -220,24 +240,26 @@ $num_items = mysqli_num_rows($result_items);
       </nav> -->
 
   <!-- Latest Product Section Begin -->
+<form method="post" action="cus-menu.php?r=<?php echo $_SESSION['user_id'];?>" id="submitForm">
   <section class="latest-product spad">
     <div class="container">
       <div class="row">
-        <?php for($c=0; $c<$num_items; $c++){ ?>
-        <?php $prod = mysqli_fetch_assoc($result_items);?>
-        <?php $client_img_path = "client/".$prod['prod_image'];?>
-        <?php $client_prod_price = number_format(($prod['prod_price']*1.0),2);?>
-          <div class="col-lg-4 col-md-6">
-            <div class="card" style="width: 20rem;">
-             <img class="card-img-top" src="<?php echo $client_img_path?>" alt="Card image cap">
-              <div class="card-block">
-                <h4 class="card-title"><?php echo $prod['prod_name'];?></h4>
-                <p class="card-text">Price: RM<?php echo $client_prod_price;?></p>
-                <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary">Add to cart</a>
+          <?php for($c=0; $c<$num_items; $c++){ ?>
+          <?php $prod = mysqli_fetch_assoc($result_items);?>
+          <?php $client_img_path = "client/".$prod['prod_image'];?>
+          <?php $client_prod_price = number_format(($prod['prod_price']*1.0),2);?>
+            <div class="col-lg-4 col-md-6">
+              <div class="card" style="width: 20rem;">
+              <img class="card-img-top" src="<?php echo $client_img_path?>" alt="Image">
+                <div class="card-block">
+                  <h4 class="card-title"><?php echo $prod['prod_name'];?></h4>
+                  <p class="card-text">Price: RM<?php echo $client_prod_price;?></p>
+                  <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary">Add to cart</a>
+                  <input type="hidden" id="mydata" name="mydata" value="<?php echo $client_prod_price;?>">
+                </div>
               </div>
             </div>
-          </div>
-        <?php } ?>
+          <?php } ?>
         <!-- <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
@@ -298,7 +320,6 @@ $num_items = mysqli_num_rows($result_items);
                                 </a>
                             </div>
                         </div> -->
-
       </div>
     </div>
     </div>
@@ -319,7 +340,7 @@ $num_items = mysqli_num_rows($result_items);
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><button type="button" class="btn btn-success">Submit Order</button></li>
+      <li><button type="submit" name="submit_order" class="btn btn-success">Submit Order</button></li>
     </ul>
   </nav>
   <!-- Modal -->
@@ -341,11 +362,12 @@ $num_items = mysqli_num_rows($result_items);
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button class="clear-cart btn btn-danger">Clear Cart</button></div>
-          <button type="button" class="btn btn-success">Submit Order</button>
+          <button type="submit" name="submit_order" class="btn btn-success">Submit Order</button>
         </div>
       </div>
     </div>
   </div>
+</form>
   <!-- FOOTER -->
   </main>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -356,6 +378,10 @@ $num_items = mysqli_num_rows($result_items);
   </script>
   <script src="assets/dist/js/bootstrap.bundle.js"></script>
   <script src="assets/dist/js/shoppingcart.js"></script>
+  <script>
+  var myvalue = 55;
+  $("#mydata").val(myvalue);
+  </script>
 </body>
 
 </html>

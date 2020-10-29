@@ -20,7 +20,7 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-							data-target="#submenu-11" aria-controls="submenu-11"><i class="fas fa-f fa-home"></i>Landing Page</a>
+							data-target="#submenu-11" aria-controls="submenu-11"><i class="fas fa-f fa-home"></i>Your Landing Page</a>
 						<div id="submenu-11" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">

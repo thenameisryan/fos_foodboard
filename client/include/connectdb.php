@@ -11,7 +11,7 @@ $randNum = mt_rand(1, 9999);
 $landing_desc = "This is a default description. You are able to change this in the dashboard.";
 $landing_location = "This is a default location. You are able to change this in the dashboard.";
 $landing_contact = "000-0000000";
-$landing_image = "";
+$landing_image = "assets/landing-bg/card-img-3.jpg";
 /* Categories */
 $cat_title = "All";
 
@@ -64,15 +64,15 @@ if (isset($_POST['reg_user'])) {
   	// register user if there are no errors in the form
   	if (count($errors) == 0) {
   		$password = base64_encode($password_1);//encrypt the password before saving in the database
-  		$query = "INSERT INTO fos_client (client_username, client_email, client_pass, client_res_name, date_created, created_by) 
-  				  VALUES('$username', '$email', '$password', '$restname', '$datenow', 'USER')";
+  		$query = "INSERT INTO fos_client (client_username, client_email, client_pass, client_res_name, client_qr, date_created, created_by) 
+  				  VALUES('$username', '$email', '$password', '$restname', 'false', '$datenow', 'USER')";
 		mysqli_query($db, $query);
   		$query_user = "SELECT * FROM fos_client WHERE client_username='$username'";
   		$results = mysqli_query($db, $query_user);
 		$user_info = mysqli_fetch_assoc($results);
 		$client_uid_info = $user_info['uid'];
-		$query_landing = "INSERT INTO fos_landing (client_uid, landing_desc, landing_location, landing_contact, date_created) 
-  				  VALUES('$client_uid_info', '$landing_desc', '$landing_location', '$landing_contact', '$datenow')";
+		$query_landing = "INSERT INTO fos_landing (client_uid, landing_desc, landing_location, landing_contact, landing_image, date_created) 
+  				  VALUES('$client_uid_info', '$landing_desc', '$landing_location', '$landing_contact', '$landing_image', '$datenow')";
 		mysqli_query($db, $query_landing);
 		$query_cat = "INSERT INTO fos_cat (client_uid, cat_title, date_created) 
   				  VALUES('$client_uid_info', '$cat_title', '$datenow')";
@@ -222,53 +222,6 @@ if (isset($_POST['edit_pass'])) {
   }
 }
 
-// CREATE NEW USER
-if (isset($_POST['create_new_user'])) {
-  // receive all input values from the form
-	$user_id = mysqli_insert_id($db);
-  $username = mysqli_real_escape_string($db, $_POST['username']);
-  $email_reg = mysqli_real_escape_string($db, $_POST['email']);
-  $user_type = mysqli_real_escape_string($db, $_POST['user_type']);
-  $user_role = mysqli_real_escape_string($db, $_SESSION['user_role']);
-  $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
-  $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
-
-  // form validation: ensure that the form is correctly filled ...
-  // by adding (array_push()) corresponding error unto $errors array
-  if (empty($username)) { array_push($errors, "* Username is required"); }
-  if (empty($email_reg)) { array_push($errors, "* Email is required"); }
-  if (empty($user_type)) { array_push($errors, "* User Type is required"); }
-  if (empty($password_1)) { array_push($errors, "* Password is required"); }
-  if ($password_1 != $password_2) {
-	array_push($errors, "* The two passwords do not match");
-  }
-
-  // first check the database to make sure 
-  // a user does not already exist with the same username and/or email
-  $user_check_query = "SELECT * FROM user WHERE username='$username' OR useremail='$email_reg' LIMIT 1";
-  $result = mysqli_query($db, $user_check_query);
-  $user = mysqli_fetch_assoc($result);
-  
-  if ($user) { // if user exists
-    if ($user['username'] === $username) {
-      array_push($errors, "* Username already exists");
-    }
-
-    if ($user['useremail'] === $email_reg) {
-      array_push($errors, "* Email already exists");
-    }
-  }
-
-  //register user if there are no errors in the form
-  if (count($errors) == 0) {
-  	$password = base64_encode($password_1);//encrypt the password before saving in the database
-  	$query = "INSERT INTO user (username, useremail, userpass, user_type, date_created, created_by) 
-  			  VALUES('$username', '$email_reg', '$password', '$user_type', '$datenow', '$user_role')";
-  	mysqli_query($db, $query);
-  	$_SESSION['success'] = "Successfully created new user.";
-  	header('location: user_list.php');
-  }
-}
 // ADD NEW PRODUCT
 if (isset($_POST['add_menu_item'])) {
  	// receive all input values from the form
@@ -326,6 +279,7 @@ if (isset($_POST['add_menu_item'])) {
 		header('location: menu-items.php');
 	}
 }
+
 // ADD NEW CATEGORY
 if (isset($_POST['add_menu_cat'])) {
 	// receive all input values from the form
@@ -355,95 +309,5 @@ if (isset($_POST['add_menu_cat'])) {
 	   mysqli_query($db, $query);
 	   header('location: menu-categories.php');
    }
-}
-// ADD NEW BLOG
-if (isset($_POST['add_new_blog'])) {
- 	// receive all input values from the form
- 	$blog_title = mysqli_real_escape_string($db, $_POST['blog_title']);
- 	$blog_desc = mysqli_real_escape_string($db, $_POST['blog_desc']);
- 	$blog_author = mysqli_real_escape_string($db, $_POST['blog_author']);
- 	$blog_cat = mysqli_real_escape_string($db, strtoupper($_POST['blog_cat']));
- 	$user = mysqli_real_escape_string($db, $_SESSION['username']);
-	$target_dir = "img/uploads/";
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-  // form validation: ensure that the form is correctly filled ...
-  // by adding (array_push()) corresponding error unto $errors array
-  if (empty($blog_title)) { array_push($errors, "* Blog title is required"); }
-  if (empty($blog_desc)) { array_push($errors, "* Blog description is required"); }
-  if (empty($blog_author)) { array_push($errors, "* Blog author is required"); }
-
-// // Check if file already exists
-// if (file_exists($target_file)) {
-//     array_push($errors, "Sorry, file already exists.");
-//     $uploadOk = 0;
-// }
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 1000000) {
-    array_push($errors, "Sorry, your file is too large.");
-}
-// Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-	array_push($errors, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
-}
-
-  if (count($errors) == 0) {
-  	move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-  	$query = "INSERT INTO blog (blog_title, blog_image, blog_description, blog_category, blog_written_by, blog_date_created, blog_created_by) 
-  			  VALUES('$blog_title','$target_file', '$blog_desc','$blog_cat', '$blog_author','$datenow','$user')";
-  	mysqli_query($db, $query);
-  	$_SESSION['success'] = "Successfully added new blog.";
-  	header('location: blog_list.php');
-  }
-}
-// BUILD
-if (isset($_POST['submit_build'])) {
-  // receive all input values from the form
-  $cpu = mysqli_real_escape_string($db, $_POST['cpu']);
-  $cpu_quantity = mysqli_real_escape_string($db, $_POST['quantity'][0]);
-  $cpu_cooler = mysqli_real_escape_string($db, $_POST['cpucooler']);
-  $cpucooler_quantity = mysqli_real_escape_string($db, $_POST['quantity'][1]);
-  $ram = mysqli_real_escape_string($db, $_POST['ram']);
-  $ram_quantity = mysqli_real_escape_string($db, $_POST['quantity'][2]);
-  $motherboard = mysqli_real_escape_string($db, $_POST['mboard']);
-  $mboard_quantity = mysqli_real_escape_string($db, $_POST['quantity'][3]);
-  $graphics_card = mysqli_real_escape_string($db, $_POST['gcard']);
-  $gcard_quantity = mysqli_real_escape_string($db, $_POST['quantity'][4]);
-  $storage = mysqli_real_escape_string($db, $_POST['storage']);
-  $storage_quantity = mysqli_real_escape_string($db, $_POST['quantity'][5]);
-  $casing = mysqli_real_escape_string($db, $_POST['case']);
-  $casing_quantity = mysqli_real_escape_string($db, $_POST['quantity'][6]);
-  $power_supply = mysqli_real_escape_string($db, $_POST['powersup']);
-  $powersup_quantity = mysqli_real_escape_string($db, $_POST['quantity'][7]);
-  $optical_drive = mysqli_real_escape_string($db, $_POST['optdrive']);
-  $optdrive_quantity = mysqli_real_escape_string($db, $_POST['quantity'][8]);
-  $software = mysqli_real_escape_string($db, $_POST['software']);
-  $software_quantity = mysqli_real_escape_string($db, $_POST['quantity'][9]);
-  $monitor = mysqli_real_escape_string($db, $_POST['monitor']);
-  $monitor_quantity = mysqli_real_escape_string($db, $_POST['quantity'][10]);
-  $other = mysqli_real_escape_string($db, $_POST['other']);
-  $other_quantity = mysqli_real_escape_string($db, $_POST['quantity'][11]);
-  $user_id = mysqli_real_escape_string($db, $_SESSION['user_id']);
-  //$total = ($cpu * $cpu_quantity) + ($cpu_cooler * $cpucooler_quantity) + ($ram * $ram_quantity) + ($motherboard * $mboard_quantity) + ($graphics_card * $gcard_quantity) + ($storage * $storage_quantity) + ($casing * $casing_quantity) + ($power_supply * $powersup_quantity) + ($optical_drive * $optdrive_quantity) + ($software * $software_quantity) + ($monitor * $monitor_quantity) + ($other * $other_quantity);
-  
-  // form validation:
-  //if (empty($username)) { array_push($errors, "* Username is required"); }
-
-  //register user if there are no errors in the form
-  if (count($errors) == 0) {
-  	if ($_SESSION['user_login'] == "true") {
-  		$query = "INSERT INTO build(userid, cpu, cpu_quantity, cpu_cooler, cpucooler_quantity, ram, ram_quantity, motherboard, mboard_quantity, graphics_card, gcard_quantity, storage, storage_quantity, casing, casing_quantity, power_supply, powersup_quantity, optical_drive, optdrive_quantity, software, software_quantity, monitor, monitor_quantity, other, other_quantity, build_date_created) 
-  			  VALUES('$user_id','$cpu', '$cpu_quantity', '$cpu_cooler', '$cpucooler_quantity', '$ram', '$ram_quantity', '$motherboard', '$mboard_quantity', '$graphics_card', '$gcard_quantity', '$storage', '$storage_quantity', '$casing', '$casing_quantity','$power_supply', '$powersup_quantity', '$optical_drive', '$optdrive_quantity', '$software', '$software_quantity', '$monitor', '$monitor_quantity', '$other', '$other_quantity','$datenow')";
-  	mysqli_query($db, $query);
-  	header('location: order.php');
-  	}else{
-  		//$query = "INSERT INTO temp_build(userid, cpu, cpu_quantity, cpu_cooler, cpucooler_quantity, ram, ram_quantity, motherboard, mboard_quantity, graphics_card, gcard_quantity, storage, storage_quantity, casing, casing_quantity, power_supply, powersup_quantity, optical_drive, optdrive_quantity, software, software_quantity, monitor, monitor_quantity, other, other_quantity, build_date_created) 
-  			  //VALUES('$temp_user_id','$cpu', '$cpu_quantity', '$cpu_cooler', '$cpucooler_quantity', '$ram', '$ram_quantity', '$motherboard', '$mboard_quantity', '$graphics_card', '$gcard_quantity', '$storage', '$storage_quantity', '$casing', '$casing_quantity','$power_supply', '$powersup_quantity', '$optical_drive', '$optdrive_quantity', '$software', '$software_quantity', '$monitor', '$monitor_quantity', '$other', '$other_quantity','$datenow')";
-  		//mysqli_query($db, $query);
-  		//header('location: login.php');
-  	}
-  }
 }
 ?>

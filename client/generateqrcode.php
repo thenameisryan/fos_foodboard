@@ -1,9 +1,15 @@
 <?php
 include("include/connectdb.php");
 include("assets/vendor/phpqrcode/qrlib.php");
+
+$client_qrcheck_query = "SELECT * FROM fos_client WHERE uid = '".$_SESSION['user_id']."'";
+$result = mysqli_query($db, $client_qrcheck_query);
+
+
 if(isset($_GET['qr'])){
     if($_GET['qr']=='t'){
         //encode url here
+        //Flaw: if user refreshes page, it will generate another qr code.
         $url = "https://localhost/fos_foodboard/cus-landing.php?r='".$_SESSION['user_id']."'"; 
   
         // $path variable store the location where to
@@ -21,6 +27,15 @@ if(isset($_GET['qr'])){
 
         // Generates QR Code and Stores it in directory given
         QRcode::png($url, $file, $ecc, $pixel_Size, $frame_Size);
+
+        $query_insert = "UPDATE fos_client SET client_qr_image = '$file'
+        WHERE uid = '".$_SESSION['user_id']."'";
+        mysqli_query($db, $query_insert);
+
+        $query = "UPDATE fos_client SET client_qr = 'true'
+        WHERE uid = '".$_SESSION['user_id']."'";
+        $results = mysqli_query($db, $query);
+        
     }
 }
 
@@ -123,12 +138,16 @@ if(!isset($user)) {
                                 echo "<div class='card' id='qrcode'>";
                                 echo "<h5 class='card-header'>Your QR Code</h5>";
                                 echo "<div class='card-body'>";
+                                $user = mysqli_fetch_assoc($result);
                                 ?>
-                                <?php if(isset($_GET['qr'])){ ?>
-                                <center><img src="<?php
-                                // Displaying the stored QR code from directory 
-                                echo $file;?>"></center>  
-                                <?php }else{ ?>
+                                <?php if($user['client_qr']=='true'){?>
+                                        <center><img src="<?php
+                                        // Displaying the stored QR code from directory 
+                                        echo $user['client_qr_image'];?>"></center> 
+                                    <?php }elseif(isset($_GET['qr'])){ ?>
+                                    <center><img src="<?php
+                                        // Displaying the stored QR code from directory 
+                                        echo $file;?>"></center> 
                                 <?php } ?>
                                 <?php
                                 echo "</div>";
@@ -139,13 +158,14 @@ if(!isset($user)) {
                                 <!-- ============================================================== -->
                                 <!-- end qrcode -->
                                 <!-- ============================================================== -->
-                                <?php if (isset($_GET['qr'])) { ?>
+                                <?php if($user['client_qr']=='true'){?>
+                                    <a download href="<?php echo $file; ?>" class="btn btn-rounded btn-primary">Download</a>
+                                <?php }elseif (isset($_GET['qr'])){ ?>
                                     <a download href="<?php echo $file; ?>" class="btn btn-rounded btn-primary">Download</a>
                                 <?php }else{ ?>
                                     <a href="generateqrcode.php?qr=t" class="btn btn-rounded btn-primary">Generate your QR Code</a>
-                                <?php } ?>
-                                
-                                
+                                <?php } ?> 
+                               
                         </div>
                         <!-- /.card -->
                     </div>
