@@ -24,7 +24,7 @@ if (isset($_POST['edit_landing'])) {
 	}
 	if (count($errors) == 0) {
 	move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-  	echo $query = "UPDATE fos_landing
+  	$query = "UPDATE fos_landing
 			SET landing_desc = '$landing_desc',
 			landing_location = '$landing_location',
 			landing_contact = '$landing_contact',
@@ -32,7 +32,7 @@ if (isset($_POST['edit_landing'])) {
 			date_edited = '$datenow'
 			WHERE client_uid = '".$current_user."'";
   	mysqli_query($db, $query);
-  	//header('location: edit_landing.php');
+  	header('location: index.php');
   	}
 }
 
@@ -141,7 +141,7 @@ if(!isset($user)) {
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Restaurant Description</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}else{echo $landing['landing_desc'];}{echo $landing['landing_desc'];}?>" placeholder="<?php echo $landing['landing_desc']?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}else{echo $landing['landing_desc'];}?>" placeholder="<?php echo $landing['landing_desc']?>"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea2">Restaurant Location</label>

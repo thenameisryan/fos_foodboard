@@ -85,54 +85,31 @@ if(!isset($user)) {
                 <!-- ============================================================== -->
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
-                <div class="dashboard-short-list">
-                    <div class="row">
-                        <!-- ============================================================== -->
-                        <!-- shortable list  -->
-                        <!-- ============================================================== -->
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 co-12">
-                            <section class="card card-fluid">
-                                <h5 class="card-header drag-handle"> Menu Categories </h5>
-                                <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
-                                    <?php for($c=0; $c<$num_items; $c++){ ?>
-                                    <?php $cat = mysqli_fetch_assoc($result_items);?>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                        <span class="drag-indicator"></span>
-                                        <div> <?php echo $cat['cat_title'];?> </div>
-                                        <div class="btn-group ml-auto">
-                                            <button class="btn btn-sm btn-outline-light">Edit</button>
-                                            <div class="">
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    <div class="dashboard-short-list">
+                        <div class="row">
+                            <!-- ============================================================== -->
+                            <!-- shortable list  -->
+                            <!-- ============================================================== -->
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 co-12">
+                                <section class="card card-fluid">
+                                    <h5 class="card-header drag-handle"> Menu Categories </h5>
+                                    <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
+                                        <?php for($c=0; $c<$num_items; $c++){ ?>
+                                        <?php $cat = mysqli_fetch_assoc($result_items);?>
+                                        <li class="list-group-item align-items-center drag-handle">
+                                            <span class="drag-indicator"></span>
+                                            <div> <?php echo $cat['cat_title'];?> </div>
+                                            <div class="btn-group ml-auto">
+                                                <button class="btn btn-sm btn-outline-light" onclick="location.href='edit-cat.php?edt=<?php echo $cat['uid'];?>'">Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="location.href='wipe.php?del=<?php echo $cat['uid'];?>'">
                                                     <i class="far fa-trash-alt"></i>
                                                 </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </a>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Woohoo, You are readng this text in a modal! Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications, or completely custom content.</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                                                                <a href="#" class="btn btn-primary">Save changes</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <?php } ?>
-                                    <button class="btn btn-primary" type="submit" >Make Changes</button>
-                                </ul>
-                            </section>
-                        </div>
+                                        </li>
+                                        <?php } ?>
+                                    </ul>
+                                </section>
+                            </div>
                     </div>
                     <!-- ============================================================== -->
                     <!-- end shortable list  -->
