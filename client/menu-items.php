@@ -114,8 +114,9 @@ if(!isset($user)) {
                                                 <div class="product-price">RM<?php echo $prod['prod_price'];?></div>
                                             </div>
                                             <div class="product-btn">
-                                                <a href="#" class="btn btn-light">Details</a>
-                                                <a href="#" class="btn btn-danger">Delete</a>
+                                                <a href="detail-items.php?edt=<?php echo $prod['uid'];?>" class="btn btn-light">Details</a>
+                                                <a href="edit-menu-items.php?edt=<?php echo $prod['uid'];?>" class="btn btn-light">Edit</a>
+                                                <a href="wipe.php?delitms=<?php echo $prod['uid'];?>" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
                                             </div>
                                         </div>
                                     </div>

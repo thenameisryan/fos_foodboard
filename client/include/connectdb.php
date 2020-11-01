@@ -244,9 +244,9 @@ if (isset($_POST['add_menu_item'])) {
   	$result = mysqli_query($db, $prod_check_query);
   	$prod = mysqli_fetch_assoc($result);
 
-  	if ($prod) { // if user exists
+  	if ($prod) { // if item exists
   	  	if ($prod['prod_name'] === $prod_name) {
-  	    	array_push($errors, "Product Name already exists.");
+  	    	array_push($errors, "* Product name already exists.");
   	  	}
   	}
 
@@ -263,7 +263,7 @@ if (isset($_POST['add_menu_item'])) {
 
 	// // Allow certain file formats
 	if(empty($_FILES["fileToUpload"]["name"])){
-
+		$target_file = "assets/images/eco-product-img-1.png";
 	}else{
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 		&& $imageFileType != "gif" ) {
