@@ -352,7 +352,7 @@ if (isset($_POST['forgot_password'])) {
 		// Send email to user with the token in a link they can click on
 		// $to = $email;
 		$subject = "Reset your password on foodboard.com";
-		$msg = "Hi there, click on this <a href=\"new-password.php?token=" . $token . "\">link</a> to reset your password on our site";
+		$email_body = "Hi there, click on this <a href=\"localhost/fos_foodboard/client/new-password.php?token=" . $token . "\">link</a> to reset your password on our site";
 		// $msg = wordwrap($msg,70);
 		// $headers = "From: info@foodboard.com";
 		// mail($to, $subject, $msg, $headers);
@@ -364,11 +364,11 @@ if (isset($_POST['forgot_password'])) {
     	$mail->Host = 'smtp.gmail.com';
     	$mail->Port = '465';
     	$mail->isHTML();
-    	$mail->Username = 'thebignut69420@gmail.com';
-    	$mail->Password = 'Thebignut69420.';
+    	$mail->Username = 'officialfoodboard@gmail.com';
+    	$mail->Password = 'foodboard2020';
     	$mail->SetFrom('no-reply@foodboard.com');
-    	$mail->Subject = $subject;
-    	$mail->Body = $msg;
+    	$mail->Subject = 'Reset your password on foodboard.com';
+    	$mail->Body = $email_body;
     	$mail->AddAddress($email);
 		$mail->Send();
 		header('location: pending.php?email=' . $email);
