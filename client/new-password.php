@@ -52,6 +52,7 @@ include("include/connectdb.php");
                         value="<?php if(isset($_POST['new_pass_c'])) {echo $_POST['new_pass_c'];}?>">
                 </div>
                     <?php include('include/errors.php'); ?>
+                    <input type="hidden" name="token" value="<?php echo $_GET['token'];?>">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" name="new_password">Submit</button>
                 </form>
             </div>

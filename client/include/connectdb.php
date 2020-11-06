@@ -351,12 +351,12 @@ if (isset($_POST['forgot_password'])) {
 	
 		// Send email to user with the token in a link they can click on
 		// $to = $email;
-		// $subject = "Reset your password on foodboard.com";
-		// $msg = "Hi there, click on this <a href=\"new-password.php?token=" . $token . "\">link</a> to reset your password on our site";
+		$subject = "Reset your password on foodboard.com";
+		$msg = "Hi there, click on this <a href=\"new-password.php?token=" . $token . "\">link</a> to reset your password on our site";
 		// $msg = wordwrap($msg,70);
 		// $headers = "From: info@foodboard.com";
 		// mail($to, $subject, $msg, $headers);
-
+		require_once('assets/vendor/PHPMailer/PHPMailerAutoload.php');
 	  	$mail = new PHPMailer();
     	$mail->isSMTP();
     	$mail->SMTPAuth = true;
@@ -379,22 +379,21 @@ if (isset($_POST['forgot_password'])) {
 if (isset($_POST['new_password'])) {
 	$new_pass = mysqli_real_escape_string($db, $_POST['new_pass']);
 	$new_pass_c = mysqli_real_escape_string($db, $_POST['new_pass_c']);
+	$token = mysqli_real_escape_string($db,$_POST['token']);
   
-	// Grab to token that came from the email link
-	$token = $_SESSION['token'];
 	if (empty($new_pass) || empty($new_pass_c)) array_push($errors, "Password is required");
 	if ($new_pass !== $new_pass_c) array_push($errors, "Password do not match");
 	if (count($errors) == 0) {
 	  // select email address of user from the password_reset table 
-	  $sql = "SELECT email FROM fos_rcvrpass WHERE token='$token' LIMIT 1";
+	  $sql = "SELECT * FROM fos_rcvrpass WHERE token='$token' LIMIT 1";
 	  $results = mysqli_query($db, $sql);
 	  $email = mysqli_fetch_assoc($results)['email'];
   
 	  if ($email) {
 		$new_pass = base64_encode($new_pass);
-		$sql = "UPDATE fos_client SET password='$new_pass' WHERE email='$email'";
+		$sql = "UPDATE fos_client SET client_pass='$new_pass' WHERE client_email='$email'";
 		$results = mysqli_query($db, $sql);
-		header('location: index.php');
+		header('location: login.php');
 	  }
 	}
 }
