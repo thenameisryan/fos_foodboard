@@ -41,28 +41,19 @@ include("include/connectdb.php");
         <div class="card ">
             <div class="card-header text-center"><a class="navbar-brand">FoodBoard</a><span class="splash-description">Please enter your user information.</span></div>
             <div class="card-body">
-                <form method="post" action="login.php">
-                    <div class="form-group">
-                        <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="<?php if(isset($_POST['username'])) {echo $_POST['username'];}?>" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" value="<?php if(isset($_POST['password'])) {echo $_POST['password'];}?>">
-                    </div>
-                    <div class="form-group">
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="remember_me"><span class="custom-control-label">Remember Me</span>
-                        </label>
-                    </div>
-                    <?php include('include/errors.php'); ?>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="login_user">Sign in</button>
-                </form>
-            </div>
-            <div class="card-footer bg-white p-0  ">
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="sign-up.php" class="footer-link">Create An Account</a></div>
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="forgot-password.php" class="footer-link">Forgot Password</a>
+                <form method="post" action="new-password.php">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="password" name="new_pass" required=""
+                        placeholder="New Password" value="<?php if(isset($_POST['new_pass'])) {echo $_POST['new_pass'];}?>">
                 </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="password" name="new_pass_c" required=""
+                        placeholder="Confirm Password"
+                        value="<?php if(isset($_POST['new_pass_c'])) {echo $_POST['new_pass_c'];}?>">
+                </div>
+                    <?php include('include/errors.php'); ?>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="new_password">Submit</button>
+                </form>
             </div>
         </div>
     </div>

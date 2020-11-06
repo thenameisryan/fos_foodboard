@@ -1,6 +1,29 @@
 <?php
 include("include/connectdb.php");
 
+//EDIT CAT PAGE
+if (isset($_POST['edit_cat'])) {
+    if ((isset($_GET['edt']))) {
+        $cat_title = mysqli_real_escape_string($db, $_POST['cat_name']);
+        $cat_id = mysqli_real_escape_string($db, $_GET['edt']);
+        $current_user = mysqli_real_escape_string($db, $_SESSION['user_id']);
+
+        if (count($errors) == 0) {
+        $query = "UPDATE fos_cat
+                SET cat_title = '$cat_title',
+                date_edited = '$datenow'
+                WHERE uid = '".$cat_id."'";
+        mysqli_query($db, $query);
+        header('location: menu-categories.php');
+        }
+    }
+}
+
+$qry = "SELECT * FROM fos_cat 
+        WHERE uid = '".$_GET['edt']."'";  
+$result_items = mysqli_query($db, $qry);
+$cat = mysqli_fetch_assoc($result_items);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -65,7 +88,7 @@ if(!isset($user)) {
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="page-header" id="top">
-                                    <h2 class="pageheader-title">Add to Menu Categories </h2>
+                                    <h2 class="pageheader-title">Edit Category</h2>
                                     <p class="pageheader-text">Text goes in here.</p>
                                     <div class="page-breadcrumb">
                                         <nav aria-label="breadcrumb">
@@ -73,7 +96,7 @@ if(!isset($user)) {
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
                                                 <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
                                                 <li class="breadcrumb-item"><a href="menu-categories.php" class="breadcrumb-link">Categories</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Add to Menu Categories</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Edit Category</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -88,21 +111,21 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="basicform">
+                                <div class="section-block" id="inputmask">
                                     <h3 class="section-title">Basic Form Elements</h3>
                                     <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add Categories</h5>
+                                    <h5 class="card-header">Edit Category </h5>
                                     <div class="card-body">
-                                        <form method="post" action="add-menu-categories.php">
+                                        <form method="post" action="">
                                             <div class="form-group">
-                                                <label for="inputText1" class="col-form-label">Category Name</label>
-                                                <input id="inputText1" type="text" class="form-control" name="cat_name" value="<?php if(isset($_POST['cat_name'])) {echo $_POST['cat_name'];}?>">
+                                                <label for="inputText1" class="col-form-label">New Category Name</label>
+                                                <input id="inputText1" type="text" class="form-control" name="cat_name" value="<?php if(isset($_POST['cat_name'])) {echo $_POST['cat_name'];}else{echo $cat['cat_title'];}?>" placeholder="<?php echo $cat['cat_title'] ;?>" onclick="">
                                             </div>
                                             <?php include('include/errors.php'); ?>
                                             <div class="form-group pt-2">
-                                                <button class="btn btn-block btn-primary" type="submit" name="add_menu_cat">Add to Menu</button>
+                                                <button class="btn btn-block btn-primary" type="submit" name="edit_cat">Make Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -112,12 +135,12 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <!-- end basic form  -->
                         <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                    </div>
                 </div>
+            </div>
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper -->
+        <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
@@ -148,7 +171,7 @@ if(!isset($user)) {
             $(".cc-inputmask").inputmask("9999 9999 9999 9999"),
             $(".ssn-inputmask").inputmask("999-99-9999"),
             $(".isbn-inputmask").inputmask("999-99-999-9999-9"),
-            $(".currency-inputmask").inputmask("RM9999"),
+            $(".currency-inputmask").inputmask("$9999"),
             $(".percentage-inputmask").inputmask("99%"),
             $(".decimal-inputmask").inputmask({
                 alias: "decimal",

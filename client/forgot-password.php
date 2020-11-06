@@ -31,6 +31,11 @@ include("include/connectdb.php");
         padding-bottom: 40px;
     }
     </style>
+    <script>
+        function goBack() {
+        window.history.back()
+        }
+    </script>
 </head>
 
 <body>
@@ -41,28 +46,16 @@ include("include/connectdb.php");
         <div class="card ">
             <div class="card-header text-center"><a class="navbar-brand">FoodBoard</a><span class="splash-description">Please enter your user information.</span></div>
             <div class="card-body">
-                <form method="post" action="login.php">
+                <form method="post" action="forgot-password.php">
                     <div class="form-group">
-                        <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="<?php if(isset($_POST['username'])) {echo $_POST['username'];}?>" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" value="<?php if(isset($_POST['password'])) {echo $_POST['password'];}?>">
-                    </div>
-                    <div class="form-group">
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="remember_me"><span class="custom-control-label">Remember Me</span>
-                        </label>
+                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Your email" value="<?php if(isset($_POST['email'])) {echo $_POST['email'];}?>" autocomplete="off">
                     </div>
                     <?php include('include/errors.php'); ?>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="login_user">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="forgot_password">Submit</button>
                 </form>
             </div>
-            <div class="card-footer bg-white p-0  ">
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="sign-up.php" class="footer-link">Create An Account</a></div>
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="forgot-password.php" class="footer-link">Forgot Password</a>
-                </div>
+            <div class="card-footer-item card-footer-item-bordered">
+                <a onclick="goBack()" class="footer-link">Back</a>
             </div>
         </div>
     </div>

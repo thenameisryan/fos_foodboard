@@ -1,6 +1,10 @@
 <?php
 include("include/connectdb.php");
 
+$qry_profile = "SELECT * FROM fos_client
+                WHERE uid = '".$_SESSION['user_id']."'";  
+$result_profile = mysqli_query($db, $qry_profile);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -27,6 +31,42 @@ if(!isset($user)) {
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <script>
+	window.onload=function(){
+	  	document.getElementById("button_edit_profile").style.display='none';
+
+	}
+	function showButton(){
+	  	document.getElementById("button_edit_profile").style.display='block';
+	}
+
+	function showPass() {
+	  	var x = document.getElementById("inputoldPass");
+	  	var y = document.getElementById("inputPass1");
+	  	var z = document.getElementById("inputPass2");
+	  	if (x.type === "password") {
+	   		x.type = "text";
+	   		document.getElementById("eye").className='fa fa-eye-slash';
+	 	} else {
+	    	x.type = "password";
+	    	document.getElementById("eye").className='fa fa-eye';
+	 	}
+	 	if (y.type === "password") {
+	   		y.type = "text";
+	   		document.getElementById("eye").className='fa fa-eye-slash';
+	 	} else {
+	    	y.type = "password";
+	    	document.getElementById("eye").className='fa fa-eye';
+	 	}
+	 	if (z.type === "password") {
+	   		z.type = "text";
+	   		document.getElementById("eye").className='fa fa-eye-slash';
+	 	} else {
+	    	z.type = "password";
+	    	document.getElementById("eye").className='fa fa-eye';
+	 	}
+	}
+	</script>
 </head>
 
 <body>
@@ -65,15 +105,13 @@ if(!isset($user)) {
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="page-header" id="top">
-                                    <h2 class="pageheader-title">Add to Menu Categories </h2>
+                                    <h2 class="pageheader-title">Change Password</h2>
                                     <p class="pageheader-text">Text goes in here.</p>
                                     <div class="page-breadcrumb">
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
-                                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
-                                                <li class="breadcrumb-item"><a href="menu-categories.php" class="breadcrumb-link">Categories</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Add to Menu Categories</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Change Password</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -88,21 +126,30 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="basicform">
+                                <div class="section-block" id="inputmask">
                                     <h3 class="section-title">Basic Form Elements</h3>
                                     <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add Categories</h5>
+                                    <h5 class="card-header">Change your password </h5>
                                     <div class="card-body">
-                                        <form method="post" action="add-menu-categories.php">
+                                        <form method="post" action="change-password.php">
+                                        <h5>Click to show password &nbsp; &nbsp; &nbsp;<i class="fa fa-eye" style="font-size:24px" id="eye" onclick="showPass()"></i></h5>
                                             <div class="form-group">
-                                                <label for="inputText1" class="col-form-label">Category Name</label>
-                                                <input id="inputText1" type="text" class="form-control" name="cat_name" value="<?php if(isset($_POST['cat_name'])) {echo $_POST['cat_name'];}?>">
+                                                <label for="inputText1" class="col-form-label">Old Password</label>
+                                                <input type="password" class="form-control" name="old_pass" id="inputoldPass" value="<?php if(isset($_POST['old_pass'])) {echo $_POST['old_pass'];}?>" onkeyup="showButton()">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputText2" class="col-form-label">New Password</label>
+                                                <input type="password" class="form-control" name="change_password_1" id="inputPass1" value="<?php if(isset($_POST['change_password_1'])) {echo $_POST['change_password_1'];}?>" onkeyup="showButton()">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputText3" class="col-form-label">Confirm New Password</label>
+                                                <input type="password" class="form-control" name="change_password_2" id="inputPass2" value="<?php if(isset($_POST['change_password_2'])) {echo $_POST['change_password_2'];}?>" onkeyup="showButton()">
                                             </div>
                                             <?php include('include/errors.php'); ?>
                                             <div class="form-group pt-2">
-                                                <button class="btn btn-block btn-primary" type="submit" name="add_menu_cat">Add to Menu</button>
+                                                <button class="btn btn-block btn-primary" type="submit" name="edit_pass" id="button_edit_profile">Make Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -112,12 +159,12 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <!-- end basic form  -->
                         <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                    </div>
                 </div>
+            </div>
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper -->
+        <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
@@ -137,40 +184,6 @@ if(!isset($user)) {
     <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="assets/libs/js/main-js.js"></script>
     <script src="assets/vendor/inputmask/js/jquery.inputmask.bundle.js"></script>
-    <script>
-    $(function(e) {
-        "use strict";
-        $(".date-inputmask").inputmask("dd/mm/yyyy"),
-            $(".phone-inputmask").inputmask("(999) 999-9999"),
-            $(".international-inputmask").inputmask("+9(999)999-9999"),
-            $(".xphone-inputmask").inputmask("(999) 999-9999 / x999999"),
-            $(".purchase-inputmask").inputmask("aaaa 9999-****"),
-            $(".cc-inputmask").inputmask("9999 9999 9999 9999"),
-            $(".ssn-inputmask").inputmask("999-99-9999"),
-            $(".isbn-inputmask").inputmask("999-99-999-9999-9"),
-            $(".currency-inputmask").inputmask("RM9999"),
-            $(".percentage-inputmask").inputmask("99%"),
-            $(".decimal-inputmask").inputmask({
-                alias: "decimal",
-                radixPoint: "."
-            }),
-
-            $(".email-inputmask").inputmask({
-                mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[*{2,6}][*{1,2}].*{1,}[.*{2,6}][.*{1,2}]",
-                greedy: !1,
-                onBeforePaste: function(n, a) {
-                    return (e = e.toLowerCase()).replace("mailto:", "")
-                },
-                definitions: {
-                    "*": {
-                        validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~/-]",
-                        cardinality: 1,
-                        casing: "lower"
-                    }
-                }
-            })
-    });
-    </script>
 </body>
  
 </html>

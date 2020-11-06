@@ -1,6 +1,11 @@
 <?php
 include("include/connectdb.php");
 
+$qry_profile = "SELECT * FROM fos_client
+                WHERE uid = '".$_SESSION['user_id']."'";  
+$result = mysqli_query($db, $qry_profile);
+$profile = mysqli_fetch_assoc($result);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -65,15 +70,14 @@ if(!isset($user)) {
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="page-header" id="top">
-                                    <h2 class="pageheader-title">Add to Menu Categories </h2>
+                                    <h2 class="pageheader-title">Edit Contact Information</h2>
                                     <p class="pageheader-text">Text goes in here.</p>
                                     <div class="page-breadcrumb">
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
-                                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
-                                                <li class="breadcrumb-item"><a href="menu-categories.php" class="breadcrumb-link">Categories</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Add to Menu Categories</li>
+                                                <li class="breadcrumb-item"><a href="profile.php" class="breadcrumb-link">Your Account</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">Edit Contact Information</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -88,21 +92,21 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="basicform">
+                                <div class="section-block" id="inputmask">
                                     <h3 class="section-title">Basic Form Elements</h3>
                                     <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add Categories</h5>
+                                    <h5 class="card-header">Edit Contact Information </h5>
                                     <div class="card-body">
-                                        <form method="post" action="add-menu-categories.php">
+                                        <form method="post" action="edit-profile.php">
                                             <div class="form-group">
-                                                <label for="inputText1" class="col-form-label">Category Name</label>
-                                                <input id="inputText1" type="text" class="form-control" name="cat_name" value="<?php if(isset($_POST['cat_name'])) {echo $_POST['cat_name'];}?>">
+                                                <label for="inputText1" class="col-form-label">Email Address</label>
+                                                <input id="inputText1" type="email" class="form-control" name="email_change" value="<?php if(isset($_POST['email_change'])) {echo $_POST['email_change'];}else{echo $profile['client_email'];}?>" placeholder="<?php echo $profile['client_email']?>">
                                             </div>
                                             <?php include('include/errors.php'); ?>
                                             <div class="form-group pt-2">
-                                                <button class="btn btn-block btn-primary" type="submit" name="add_menu_cat">Add to Menu</button>
+                                                <button class="btn btn-block btn-primary" type="submit" name="edit_profile">Make Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -112,12 +116,12 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <!-- end basic form  -->
                         <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                    </div>
                 </div>
+            </div>
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper -->
+        <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
@@ -148,7 +152,7 @@ if(!isset($user)) {
             $(".cc-inputmask").inputmask("9999 9999 9999 9999"),
             $(".ssn-inputmask").inputmask("999-99-9999"),
             $(".isbn-inputmask").inputmask("999-99-999-9999-9"),
-            $(".currency-inputmask").inputmask("RM9999"),
+            $(".currency-inputmask").inputmask("$9999"),
             $(".percentage-inputmask").inputmask("99%"),
             $(".decimal-inputmask").inputmask({
                 alias: "decimal",

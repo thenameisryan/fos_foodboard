@@ -93,7 +93,7 @@ if(!isset($user)) {
                                     <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add </h5>
+                                    <h5 class="card-header">Add Items</h5>
                                     <div class="card-body">
                                         <form method="post" action="add-menu-items.php" enctype="multipart/form-data">
                                             <div class="form-group">

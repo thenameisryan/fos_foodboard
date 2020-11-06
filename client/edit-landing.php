@@ -152,7 +152,7 @@ if(!isset($user)) {
                                                 <input type="text" class="form-control phone-inputmask" name="res_contact" id="phone-mask" im-insert="true" value="<?php if(isset($_POST['res_contact'])) {echo $_POST['res_contact'];}else{echo $landing['landing_contact'];}?>" placeholder="<?php echo $landing['landing_contact']?>">
                                             </div>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input" name="fileToUpload" id="fileToUpload">
+                                                <input type="file" class="custom-file-input" name="fileToUpload" id="fileToUpload" required="">
                                                 <label class="custom-file-label" for="customFile">Restaurant Image</label>
                                             </div>
                                             <?php include('include/errors.php'); ?>
