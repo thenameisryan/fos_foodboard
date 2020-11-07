@@ -7,6 +7,16 @@ $qry_profile = "SELECT * FROM fos_client
 $result_profile = mysqli_query($db, $qry_profile);
 $user_profile = mysqli_fetch_assoc($result_profile);
 
+$qry_review = "SELECT * FROM fos_review 
+					WHERE client_uid =  '".$_SESSION['user_id']."'";  
+$result_review = mysqli_query($db, $qry_review);
+$num_review = mysqli_num_rows($result_review);
+
+$qry_review2 = "SELECT * FROM fos_review 
+					WHERE client_uid =  '".$_SESSION['user_id']."'";  
+$result_review2 = mysqli_query($db, $qry_review2);
+$num_review2 = mysqli_num_rows($result_review2);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -98,7 +108,7 @@ if(!isset($user)) {
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h3 class="mb-2">Your Account </h3>
+                                <h3 class="mb-2">Your Account <a href="edit-profile.php" class="btn btn-rounded btn-dark btn-xs"><i class="fas fa-edit"> Edit </i></a></h3>
                                 <p class="pageheader-text">Text goes in here.</p>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
@@ -128,7 +138,7 @@ if(!isset($user)) {
                             <div class="card">
                                 <div class="card-body">
                                     <div class="user-avatar text-center d-block">
-                                        <img src="assets/images/avatar-1.jpg" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+                                        <img src="assets/images/user.png" alt="User Avatar" class="rounded-circle user-avatar-xxl">
                                     </div>
                                     <div class="text-center">
                                         <h2 class="font-24 mb-0"><?php echo $user_profile['client_res_name'];?></h2>
@@ -136,7 +146,7 @@ if(!isset($user)) {
                                     </div>
                                 </div>
                                 <div class="card-body border-top">
-                                    <h3 class="font-16">Contact Information <div id="floatr"><a href="edit-profile.php" class="btn btn-primary btn-xs">Edit</a></div></h3>
+                                    <h3 class="font-16">Contact Information </h3>
                                     <div class="">
                                         <ul class="list-unstyled mb-0">
                                         <li class="mb-2"><i class="fas fa-fw fa-envelope mr-2"></i><?php echo $user_profile['client_email'];?></li>
@@ -145,36 +155,50 @@ if(!isset($user)) {
                                     </div>
                                 </div>
                                 <div class="card-body border-top">
+								<?php 
+									$as=0;$bs=0;$cs=0;$ds=0;$es=0;
+									for($x=0; $x<$num_review2; $x++){
+										$review = mysqli_fetch_assoc($result_review2);
+										if($review['review_stars'] == 1){
+											$as= $as + 1;
+										}elseif($review['review_stars'] == 2){
+											$bs= $bs + 1;
+										}elseif($review['review_stars'] == 3){
+											$cs= $cs + 1;
+										}elseif($review['review_stars'] == 4){
+											$ds= $ds + 1;
+										}elseif($review['review_stars'] == 5){
+											$es= $es + 1;
+										}
+									}
+									$avg_rating = (1*$as+2*$bs+3*$cs+4*$ds+5*$es)/$num_review2;
+									$int_rating = number_format($avg_rating);
+								?>
                                     <h3 class="font-16">Rating</h3>
-                                    <h1 class="mb-0">4.8</h1>
+                                    <h1 class="mb-0"><?php echo number_format($avg_rating,1);?></h1>
                                     <div class="rating-star">
+									<?php if($int_rating == 1){?>
+										<i class="fa fa-fw fa-star"></i>
+									<?php }elseif($int_rating == 2){?>		
                                         <i class="fa fa-fw fa-star"></i>
-                                        <i class="fa fa-fw fa-star"></i>
-                                        <i class="fa fa-fw fa-star"></i>
-                                        <i class="fa fa-fw fa-star"></i>
-                                        <i class="fa fa-fw fa-star"></i>
-                                        <p class="d-inline-block text-dark">14 Reviews </p>
-                                    </div>
-                                </div>
-                                <div class="card-body border-top">
-                                    <h3 class="font-16">Social Channels</h3>
-                                    <div class="">
-                                        <ul class="mb-0 list-unstyled">
-                                        <li class="mb-1"><a href="#"><i class="fab fa-fw fa-facebook-square mr-1 facebook-color"></i>fb.me/michaelchristy</a></li>
-                                        <li class="mb-1"><a href="#"><i class="fab fa-fw fa-twitter-square mr-1 twitter-color"></i>twitter.com/michaelchristy</a></li>
-                                        <li class="mb-1"><a href="#"><i class="fab fa-fw fa-instagram mr-1 instagram-color"></i>instagram.com/michaelchristy</a></li>
-                                        <li class="mb-1"><a href="#"><i class="fas fa-fw fa-rss-square mr-1 rss-color"></i>michaelchristy.com/blog</a></li>
-                                        <li class="mb-1"><a href="#"><i class="fab fa-fw fa-pinterest-square mr-1 pinterest-color"></i>pinterest.com/michaelchristy</a></li>
-                                        <li class="mb-1"><a href="#"><i class="fab fa-fw fa-youtube mr-1 youtube-color"></i>youtube/michaelchristy</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body border-top">
-                                    <h3 class="font-16">Cuisines <div id="floatr"><a href="edit-cuisine.php" class="btn btn-primary btn-xs">Edit</a></div></h3>
-                                    <div>
-                                        <span class="badge badge-light mr-1">Fitness</span>
-										<span class="badge badge-light mr-1">Life Style</span>
-										<span class="badge badge-light mr-1">Gym</span>
+										<i class="fa fa-fw fa-star"></i>
+									<?php }elseif($int_rating == 3){?>	
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+									<?php }elseif($int_rating == 4){?>	
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+									<?php }elseif($int_rating == 5){?>	
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+										<i class="fa fa-fw fa-star"></i>
+									<?php } ?>
+                                        <p class="d-inline-block text-dark"><?php echo $num_review;?> Reviews </p>
                                     </div>
                                 </div>
                             </div>
@@ -197,50 +221,25 @@ if(!isset($user)) {
                                     <li class="nav-item">
                                         <a class="nav-link active" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-selected="false">Reviews</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-msg-tab" data-toggle="pill" href="#pills-msg" role="tab" aria-controls="pills-msg" aria-selected="false">Send Messages</a>
-                                    </li>
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
                                         <div class="card">
                                             <h5 class="card-header">Reviews</h5>
-                                            <div class="card-body border-top">
-                                                <div class="review-block">
-                                                    <p class="review-text font-italic m-0">“Quisque lobortis vestibulum elit, vel fermentum elit pretium et. Nullam id ultrices odio. Cras id nulla mollis, molestie diam eu, facilisis tortor. Mauris ultrices lectus laoreet commodo hendrerit. Nullam varius arcu sed aliquam imperdiet. Etiam ut luctus augue.”</p>
-                                                    <div class="rating-star mb-4">
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                    </div>
-                                                    <span class="text-dark font-weight-bold">Tabitha C. Campbell</span><small class="text-mute"> (Company name)</small>
-                                                </div>
-                                            </div>
-                                            <div class="card-body border-top">
-                                                <div class="review-block">
-                                                    <p class="review-text font-italic m-0">“Maecenas rutrum viverra augue. Nulla in eros vitae ante ullamcorper congue. Praesent tristique massa ac arcu dapibus tincidunt. Mauris arcu mi, lacinia et ipsum vel, sollicitudin laoreet risus.”</p>
-                                                    <div class="rating-star mb-4">
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                        <i class="fa fa-fw fa-star"></i>
-                                                    </div>
-                                                    <span class="text-dark font-weight-bold">Luise M. Michet</span><small class="text-mute"> (Company name)</small>
-                                                </div>
-                                            </div>
+											<?php for($c=0; $c<$num_review; $c++){ ?>
+											<?php $rev = mysqli_fetch_assoc($result_review);?>
+												<div class="card-body border-top">
+													<div class="review-block">
+														<p class="review-text font-italic m-0">"<?php echo $rev['review_content'];?>"</p>
+														<div class="rating-star mb-4">
+														<?php for($i=0; $i<$rev['review_stars']; $i++){ ?>
+															<i class="fa fa-fw fa-star"></i>
+														<?php } ?>
+														</div>
+													</div>
+												</div>
+											<?php } ?>
                                         </div>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item active"><a class="page-link " href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                     <div class="tab-pane fade" id="pills-msg" role="tabpanel"
                                     	aria-labelledby="pills-msg-tab">

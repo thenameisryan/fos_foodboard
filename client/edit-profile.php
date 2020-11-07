@@ -70,14 +70,14 @@ if(!isset($user)) {
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="page-header" id="top">
-                                    <h2 class="pageheader-title">Edit Contact Information</h2>
+                                    <h2 class="pageheader-title">Edit Profile</h2>
                                     <p class="pageheader-text">Text goes in here.</p>
                                     <div class="page-breadcrumb">
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
                                                 <li class="breadcrumb-item"><a href="profile.php" class="breadcrumb-link">Your Account</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Edit Contact Information</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -92,12 +92,8 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="inputmask">
-                                    <h3 class="section-title">Basic Form Elements</h3>
-                                    <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
-                                </div>
                                 <div class="card">
-                                    <h5 class="card-header">Edit Contact Information </h5>
+                                    <h5 class="card-header">Edit Profile </h5>
                                     <div class="card-body">
                                         <form method="post" action="edit-profile.php">
                                             <div class="form-group">

@@ -139,43 +139,17 @@ if (isset($_POST['login_user'])) {
   }
 }
 
-//CONTACT FORM
-if (isset($_POST['send_contact'])) {
-	// $contact_id = str_pad($randNum, 6, "CT", STR_PAD_LEFT); //generate random number
-	$contact_name = mysqli_real_escape_string($db, $_POST['contact_name']);
-	$contact_email = mysqli_real_escape_string($db, $_POST['contact_email']);
-	$contact_subject = mysqli_real_escape_string($db, $_POST['contact_subject']);
-	$contact_message = mysqli_real_escape_string($db, $_POST['contact_msg']);
-
-	if (empty($contact_name)) { array_push($errors, "* Name is required"); }
-	if (empty($contact_email)) { array_push($errors, "* Email is required"); }
-	if (empty($contact_subject)) { array_push($errors, "* Subject is required"); }
-	if (empty($contact_message)) { array_push($errors, "* Message is required"); }
-
-	// $user_check_query = "SELECT * FROM contact WHERE contact_id='$contact_id' LIMIT 1";
-	// $result = mysqli_query($db, $user_check_query);
-	// $id = mysqli_fetch_assoc($result);
-	  
-	// if ($id) { // if id exists
-	//     if ($id['contact_id'] === $contact_id) {
-	//       	$contact_id = str_pad($randNum, 6, "CT", STR_PAD_LEFT);
-	//     }
-	// }
-
-	if ($_SESSION['user_role'] == 'USER') {
-		$user_role = 'USER';
-	}elseif ($_SESSION['user_role'] == 'ADMIN') {
-		$user_role = 'ADMIN';
-	}else{
-		$user_role = 'NON-USER';
-	}
+//REVIEW FORM
+if (isset($_POST['submit_review'])) {
+	$reviewer_rating = mysqli_real_escape_string($db, $_POST['reviewer_rating']);
+	$reviewer_review = mysqli_real_escape_string($db, $_POST['reviewer_review']);
+	$res_id = mysqli_real_escape_string($db, $_POST['res_id']);
 
 	if (count($errors) == 0) {
-		$query = "INSERT INTO contact (contact_name, contact_email, contact_subject, contact_message, contact_date_created, contact_created_by) 
-				  VALUES('$contact_name', '$contact_email', '$contact_subject','$contact_message', '$datenow', '$user_role')";
+		$query = "INSERT INTO fos_review (client_uid, review_stars, review_content, date_created) 
+				  VALUES('$res_id', '$reviewer_rating', '$reviewer_review', '$datenow')";
 	  	mysqli_query($db, $query);
-	  	$_SESSION['success'] = "Your message has successfully sent. We will get back to you as soon as possible through email.";
-	  	header('location: home.php');
+	  	header('location: cus-landing.php?r=' . $res_id);
  	}
 	  
 }

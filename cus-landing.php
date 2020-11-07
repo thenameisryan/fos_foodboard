@@ -58,12 +58,14 @@ $landing = mysqli_fetch_assoc($results);
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-        <img class="d-block w-100" src="<?php $new_path = "client/".$landing['landing_image']; echo $new_path;?>" alt="First slide">
+          <img class="d-block w-100" src="<?php $new_path = "client/".$landing['landing_image']; echo $new_path;?>"
+            alt="First slide">
           <div class="container">
             <div class="carousel-caption text-left">
               <h1><?php echo $landing['client_res_name'];?></h1>
               <p><?php echo $landing['landing_desc'];?>
               </p>
+              <p><a class="btn btn-xs btn-primary" href="#" role="button">Review</a></p>
             </div>
           </div>
         </div>
@@ -100,34 +102,68 @@ $landing = mysqli_fetch_assoc($results);
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
+          <img src="img/landing-icons/menu.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
+            xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+            aria-label="Placeholder: 140x140">
           <h2></h2>
-          <p><a class="btn btn-secondary" href="cus-menu.php?r=<?php echo $_GET['r'];?>" role="button">View Menu &raquo;</a></p>
+          <p><a class="btn btn-primary" href="cus-menu.php?r=<?php echo $_GET['r'];?>" role="button">View Menu
+              &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
+          <img src="img/landing-icons/track.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
+            xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+            aria-label="Placeholder: 140x140">
           <h2></h2>
-          <p><a class="btn btn-secondary" href="#" role="button">Track Order &raquo;</a></p>
+          <p><a class="btn btn-primary" href="#" role="button">Track Order &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
+          <img src="img/landing-icons/review.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
+            xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+            aria-label="Placeholder: 140x140">
           <h2></h2>
-          <p><a class="btn btn-secondary" href="#" role="button">Call for Assistance &raquo;</a></p>
+          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              Give Review &raquo;
+            </button></p>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
 
+      <!-- Modal -->
+      <form method="post" action="cus-landing.php">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Give us a review </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Rating </label>
+                  <select class="form-control" id="exampleFormControlSelect1" name="reviewer_rating">
+                    <option value="1">1 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Review </label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reviewer_review" value="<?php if(isset($_POST['reviewer_review'])) {echo $_POST['reviewer_review'];}?>"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
+                <button type="submit" class="btn btn-primary" name="submit_review">Submit </button>
+              </div>
+            </div>
+          </div>
+        </form>  
+      </div>
 
       <!-- START THE FEATURETTES -->
 
@@ -156,13 +192,13 @@ $landing = mysqli_fetch_assoc($results);
           <!-- /END THE FEATURETTES -->
 
         </div><!-- /.container -->
+      </div>
 
-
-        <!-- FOOTER -->
-        <footer class="container">
-          <p class="float-right"><a href="#">Back to top</a></p>
-          <p>Copyright © 2020 FoodBoard. All rights reserved.</p>
-        </footer>
+      <!-- FOOTER -->
+      <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>Copyright © 2020 FoodBoard. All rights reserved.</p>
+      </footer>
   </main>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
