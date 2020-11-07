@@ -127,10 +127,6 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="inputmask">
-                                    <h3 class="section-title">Basic Form Elements</h3>
-                                    <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
-                                </div>
                                 <div class="card">
                                     <h5 class="card-header">Landing Page </h5>
                                     <div class="card-body">
@@ -141,11 +137,11 @@ if(!isset($user)) {
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Restaurant Description</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}else{echo $landing['landing_desc'];}?>" placeholder="<?php echo $landing['landing_desc']?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}else{echo $landing['landing_desc'];}?>" placeholder="<?php echo $landing['landing_desc'];?>"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea2">Restaurant Location</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" name="res_location" value="<?php if(isset($_POST['res_location'])) {echo $_POST['res_contact'];}else{echo $landing['landing_location'];}?>" placeholder="<?php echo $landing['landing_location']?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" name="res_location" value="<?php if(isset($_POST['res_location'])) {echo $_POST['res_location'];}else{echo $landing['landing_location'];}?>" placeholder="<?php echo $landing['landing_location'];?>"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Restaurant Contact <small class="text-muted">(999) 999-9999</small></label>

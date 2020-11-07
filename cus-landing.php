@@ -65,7 +65,8 @@ $landing = mysqli_fetch_assoc($results);
               <h1><?php echo $landing['client_res_name'];?></h1>
               <p><?php echo $landing['landing_desc'];?>
               </p>
-              <p><a class="btn btn-xs btn-primary" href="#" role="button">Review</a></p>
+              <h5><?php echo $landing['landing_location'];?></h5>
+              <h6><?php echo $landing['landing_contact'];?></h5>
             </div>
           </div>
         </div>
