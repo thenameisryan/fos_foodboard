@@ -156,6 +156,7 @@ if(!isset($user)) {
                                 </div>
                                 <div class="card-body border-top">
 								<?php 
+									if($num_review2>=1){
 									$as=0;$bs=0;$cs=0;$ds=0;$es=0;
 									for($x=0; $x<$num_review2; $x++){
 										$review = mysqli_fetch_assoc($result_review2);
@@ -171,13 +172,15 @@ if(!isset($user)) {
 											$es= $es + 1;
 										}
 									}
+								
 									$avg_rating = (1*$as+2*$bs+3*$cs+4*$ds+5*$es)/$num_review2;
 									$int_rating = number_format($avg_rating);
+								}
 								?>
                                     <h3 class="font-16">Rating</h3>
-                                    <h1 class="mb-0"><?php echo number_format($avg_rating,1);?></h1>
+                                    <h1 class="mb-0"><?php if($num_review2>=1){echo number_format($avg_rating,1);}?></h1>
                                     <div class="rating-star">
-									<?php if($int_rating == 1){?>
+									<?php if($num_review2>=1){if($int_rating == 1){?>
 										<i class="fa fa-fw fa-star"></i>
 									<?php }elseif($int_rating == 2){?>		
                                         <i class="fa fa-fw fa-star"></i>
@@ -197,7 +200,7 @@ if(!isset($user)) {
 										<i class="fa fa-fw fa-star"></i>
 										<i class="fa fa-fw fa-star"></i>
 										<i class="fa fa-fw fa-star"></i>
-									<?php } ?>
+									<?php }} ?>
                                         <p class="d-inline-block text-dark"><?php echo $num_review;?> Reviews </p>
                                     </div>
                                 </div>
