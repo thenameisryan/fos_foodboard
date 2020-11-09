@@ -371,4 +371,8 @@ if (isset($_POST['new_password'])) {
 	  }
 	}
 }
+
+if (isset($_POST['submit_order'])) {
+	header('location: client/payment.php');
+}
 ?>

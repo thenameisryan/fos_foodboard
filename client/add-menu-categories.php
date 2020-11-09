@@ -21,7 +21,7 @@ if(!isset($user)) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Adding Categories</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -88,12 +88,8 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="basicform">
-                                    <h3 class="section-title">Basic Form Elements</h3>
-                                    <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
-                                </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add Categories</h5>
+                                    <h5 class="card-header">Adding Categories Form</h5>
                                     <div class="card-body">
                                         <form method="post" action="add-menu-categories.php">
                                             <div class="form-group">

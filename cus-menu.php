@@ -1,6 +1,11 @@
 <?php
 include("client/include/connectdb.php");
 
+$qry_name = "SELECT * FROM fos_client
+        WHERE uid = '".$_GET['r']."'";  
+$result_name = mysqli_query($db, $qry_name);
+$num_name = mysqli_num_rows($result_name);
+
 $qry = "SELECT * FROM fos_prod 
         WHERE client_uid = '".$_GET['r']."'";  
 $result_items = mysqli_query($db, $qry);
@@ -30,19 +35,7 @@ $num_cat = mysqli_num_rows($result_cat);
   <link rel="manifest" href="img/favicon/site.webmanifest">
   <!-- Bootstrap core CSS -->
   <link href="assets/dist/css/bootstrap.css" rel="stylesheet">
-  <script>
-  var mydata = 55;
-  var myname = "syed ali";
-  var userdata = {'id':mydata,'name':myname};
-      $.ajax({
-              type: "POST",
-              url: "cus-menu.php?<?php echo $_SESSION['user_id'];?>",
-              data:userdata, 
-              success: function(data){
-                  console.log(data);
-              }
-              });
-  </script>
+
   <style>
     .show-cart li {
       display: flex;
@@ -163,12 +156,13 @@ $num_cat = mysqli_num_rows($result_cat);
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Ryan's Burger Place <?php echo $_POST['mydata'];?></a>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><?php for($c=0; $c<$num_name; $c++) { ?>
+    <?php $name = mysqli_fetch_assoc($result_name);?><?php echo $name['client_res_name'];?><?php } ?></a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0" method="get" action="cus-menu.php" id="searchForm">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="searchForm">Search</button>
         </form>
       </div>
     </nav>
@@ -240,7 +234,7 @@ $num_cat = mysqli_num_rows($result_cat);
       </nav> -->
 
   <!-- Latest Product Section Begin -->
-<form method="post" action="cus-menu.php?r=<?php echo $_SESSION['user_id'];?>" id="submitForm">
+<form method="post" action="cus-menu.php" id="submitForm">
   <section class="latest-product spad">
     <div class="container">
       <div class="row">
@@ -255,73 +249,43 @@ $num_cat = mysqli_num_rows($result_cat);
                   <h4 class="card-title"><?php echo $prod['prod_name'];?></h4>
                   <p class="card-text">Price: RM<?php echo $client_prod_price;?></p>
                   <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary">Add to cart</a>
-                  <input type="hidden" id="mydata" name="mydata" value="<?php echo $client_prod_price;?>">
                 </div>
               </div>
             </div>
           <?php } ?>
         <!-- <div class="latest-product__slider owl-carousel">
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Food Name</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div> -->
+                <div class="latest-prdouct__slider__item">
+                    <a href="#" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="img/latest-product/lp-1.jpg" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>Food Name</h6>
+                            <span>$30.00</span>
+                        </div>
+                    </a>
+                    <a href="#" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="img/latest-product/lp-2.jpg" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>Food Name</h6>
+                            <span>$30.00</span>
+                        </div>
+                    </a>
+                    <a href="#" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="img/latest-product/lp-3.jpg" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>Food Name</h6>
+                            <span>$30.00</span>
+                        </div>
+                    </a>
+                </div>
+              </div> -->
+      
       </div>
-    </div>
     </div>
   </section>
   <!-- Latest Product Section End -->
@@ -340,7 +304,7 @@ $num_cat = mysqli_num_rows($result_cat);
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><button type="submit" name="submit_order" class="btn btn-success">Submit Order</button></li>
+      <li><button type="submit" name="submit_order" class="clear-cart btn btn-success">Submit Order</button></li>
     </ul>
   </nav>
   <!-- Modal -->
@@ -360,9 +324,8 @@ $num_cat = mysqli_num_rows($result_cat);
           <div>Total price: $<span class="total-cart"></span></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button class="clear-cart btn btn-danger">Clear Cart</button></div>
-          <button type="submit" name="submit_order" class="btn btn-success">Submit Order</button>
+          <button type="submit" name="submit_order" class="clear-cart btn btn-success">Submit Order</button>
         </div>
       </div>
     </div>
@@ -378,10 +341,7 @@ $num_cat = mysqli_num_rows($result_cat);
   </script>
   <script src="assets/dist/js/bootstrap.bundle.js"></script>
   <script src="assets/dist/js/shoppingcart.js"></script>
-  <script>
-  var myvalue = 55;
-  $("#mydata").val(myvalue);
-  </script>
+
 </body>
 
 </html>

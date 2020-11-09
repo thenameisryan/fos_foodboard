@@ -21,7 +21,7 @@ if(!isset($user)) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Add to Menu </title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -71,8 +71,8 @@ if(!isset($user)) {
                                         <nav aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
-                                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Items</li>
+                                                <li class="breadcrumb-item"><a href="menu-items.php" class="breadcrumb-link">Menu</a></li>
+                                                <li class="breadcrumb-item"><a href="menu-items.php" class="breadcrumb-link">Items</a></li>
                                                 <li class="breadcrumb-item active" aria-current="page">Add to Menu</li>
                                             </ol>
                                         </nav>
@@ -88,12 +88,8 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="section-block" id="basicform">
-                                    <h3 class="section-title">Basic Form Elements</h3>
-                                    <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
-                                </div>
                                 <div class="card">
-                                    <h5 class="card-header">Add Items</h5>
+                                    <h5 class="card-header">Adding Items Menu Form</h5>
                                     <div class="card-body">
                                         <form method="post" action="add-menu-items.php" enctype="multipart/form-data">
                                             <div class="form-group">

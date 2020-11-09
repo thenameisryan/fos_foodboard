@@ -26,7 +26,7 @@ if(!isset($user)) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Items</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -74,7 +74,7 @@ if(!isset($user)) {
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="index.php" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Menu</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Menu</li>
                                             <li class="breadcrumb-item active" aria-current="page">Items</li>
                                         </ol>
                                     </nav>
