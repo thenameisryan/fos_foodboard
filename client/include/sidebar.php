@@ -42,6 +42,20 @@
 						</div>
 					</li>
 					<li class="nav-divider">
+						Virtual Queue
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+							data-target="#submenu-13" aria-controls="submenu-12"><i class="fas fa-f fa-book"></i>Queue</a>
+						<div id="submenu-13" class="collapse submenu" style="">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="manage-queue.php">Manage Queue</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-divider">
 						Menu
 					</li>
 					<li class="nav-item">

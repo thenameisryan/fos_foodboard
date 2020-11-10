@@ -1,5 +1,5 @@
 <?php
-include("client/include/connectdb.php");
+include("php/connectdb.php");
 
 $qry_name = "SELECT * FROM fos_client
         WHERE uid = '".$_GET['r']."'";  

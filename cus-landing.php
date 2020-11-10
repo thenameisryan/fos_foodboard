@@ -1,11 +1,21 @@
 <?php
-include("client/include/connectdb.php");
+include("php/connectdb.php");
+
+//user session needs to be destroyed in this page
 $qry = "SELECT * FROM fos_landing 
             INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
             WHERE client_uid = '".$_GET['r']."'";  
 $results = mysqli_query($db, $qry);
 $landing = mysqli_fetch_assoc($results);
 
+$qry_queue = "SELECT * FROM fos_queue 
+					WHERE client_uid = '".$_GET['r']."'"; 
+$result_queue = mysqli_query($db, $qry_queue);
+$num_queue = mysqli_num_rows($result_queue);
+
+// echo $_SESSION['inqnum'];
+// echo $_SESSION['Qcname'];
+// echo $_SESSION['Qccon'];
 ?>
 
 <!doctype html>
@@ -50,7 +60,6 @@ $landing = mysqli_fetch_assoc($results);
 <body>
 
   <main role="main">
-
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -129,7 +138,7 @@ $landing = mysqli_fetch_assoc($results);
       </div><!-- /.row -->
 
       <!-- Modal -->
-      <form method="post" action="cus-landing.php">
+      <form method="post" action="cus-landing.php" id="reviewForm">
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -169,32 +178,104 @@ $landing = mysqli_fetch_assoc($results);
       <!-- START THE FEATURETTES -->
 
       <hr class="featurette-divider">
-
+      
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading">Virtual Queue <span class="text-muted">You are in line. </span></h2>
+        <h2 class="featurette-heading">Virtual Queue <span class="text-muted" style="font-size:28px;"><?php if (isset($_SESSION['inq']) && $_SESSION['inq'] == 'true') { ?>You are in line. <?php }else{ ?>You are <span class="text-muted" style="text-decoration:underline;">not</span> in line.<?php } ?></span></h2>
         </div>
         <div class="col-md-5">
-
           <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center">John <span
-                class="badge badge-primary badge-pill">1</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Amy <span
-                class="badge badge-primary badge-pill">2</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center active">Jane </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Mark <span
-                class="badge badge-primary badge-pill">4</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Paul <span
-                class="badge badge-primary badge-pill">5</span></li>
+          <?php for($c=0; $c<1; $c++){ ?>
+          <?php $q = mysqli_fetch_assoc($result_queue);?>
+            <li class="list-group-item d-flex justify-content-between align-items-center"><?php echo $q['queue_cus_name'];?> (<?php echo $q['queue_cus_size'];?> person)<span
+                class="badge badge-<?php if($c == 0) { echo "success"; }else { echo "primary"; };?> badge-pill"><?php if($c == 0) { echo "Ready to be seated"; }else { echo $c+1; };?></span></li>
+          <?php } ?>
           </ul>
-
+          <?php if (isset($_SESSION['inq']) && $_SESSION['inq'] == 'true') { ?>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong>28</strong></span></span>
+            </li>
+          </ul>
+          <?php } ?>
+          <ul class="list-group">
+            <?php if (isset($_SESSION['inq']) && $_SESSION['inq'] == 'true') { ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="btn btn-danger btn-block"><span style="text-decoration:underline;">E</span>xit Queue</span></button>
+            </li>
+            <?php }else{ ?>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+              <button type="button" data-toggle="modal" data-target="#exampleModalCenter2" class="btn btn-success btn-block">Queue Here &raquo;</button>
+            </li>
+          <?php } ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span style="font-size:14px;"> estimated waiting time: <span style="text-decoration:underline;"><strong>28</strong></span> minutes </span>
+            </li>
+          </ul>
           <hr class="featurette-divider">
 
           <!-- /END THE FEATURETTES -->
 
+          <form method="post" action="cus-landing.php" id="queueForm">
+        <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Your Contact Information </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="queue-cus-name">Name </label>
+                    <input type="text" class="form-control" name="queue_cus_name" id="queue-cus-name" placeholder="Your Name">
+                  </div>
+                <div class="form-group">
+                    <label for="queue-cus-contact">Phone Number </label>
+                    <input type="text" class="form-control" name="queue_cus_contact" id="queue-cus-contact" placeholder="Your contact number">
+                  </div>
+                <div class="form-group">
+                    <label for="queue-cus-size">How many are we expecting? </label>
+                    <input type="number" class="form-control" name="queue_cus_size" id="queue_cus_size">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
+                <button type="submit" class="btn btn-primary" name="submit_queue">Submit </button>
+              </div>
+            </div>
+          </div>
+        </form>  
+      </div>
+      <form method="post" action="cus-landing.php" id="deleteqForm">
+        <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Exiting </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="confirmation">Do you want to exit from the queue? </label>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
+                <button type="submit" class="btn btn-danger" name="delete_queue">Yes </button>
+              </div>
+            </div>
+          </div>
+        </form>
         </div><!-- /.container -->
       </div>
-
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">Back to top</a></p>

@@ -139,21 +139,6 @@ if (isset($_POST['login_user'])) {
   }
 }
 
-//REVIEW FORM
-if (isset($_POST['submit_review'])) {
-	$reviewer_rating = mysqli_real_escape_string($db, $_POST['reviewer_rating']);
-	$reviewer_review = mysqli_real_escape_string($db, $_POST['reviewer_review']);
-	$res_id = mysqli_real_escape_string($db, $_POST['res_id']);
-
-	if (count($errors) == 0) {
-		$query = "INSERT INTO fos_review (client_uid, review_stars, review_content, date_created) 
-				  VALUES('$res_id', '$reviewer_rating', '$reviewer_review', '$datenow')";
-	  	mysqli_query($db, $query);
-	  	header('location: cus-landing.php?r=' . $res_id);
- 	}
-	  
-}
-
 //PROFILE CHANGE EMAIL
 if (isset($_POST['edit_profile'])) {
 	$email_change = mysqli_real_escape_string($db, $_POST['email_change']);
@@ -372,7 +357,4 @@ if (isset($_POST['new_password'])) {
 	}
 }
 
-if (isset($_POST['submit_order'])) {
-	header('location: client/payment.php');
-}
 ?>
