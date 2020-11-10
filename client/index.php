@@ -6,6 +6,11 @@ $qry_order = "SELECT * FROM fos_order
 $result_order = mysqli_query($db, $qry_order);
 $num_order = mysqli_num_rows($result_order);
 
+$qry_queue = "SELECT * FROM fos_queue 
+					WHERE client_uid =  '".$_SESSION['user_id']."'";  
+$result_queue = mysqli_query($db, $qry_queue);
+$num_queue = mysqli_num_rows($result_queue);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -126,6 +131,49 @@ if (isset($_GET['logout'])) {
                                                 <?php } ?>
                                                     <tr>
                                                         <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ============================================================== -->
+                            <!-- end recent orders  -->
+                            <!-- ============================================================== -->
+
+                                          <!-- recent orders  -->
+                            <!-- ============================================================== -->
+                            <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header">Virtual Queue</h5>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="bg-light">
+                                                    <tr class="border-0">
+                                                        <th class="border-0"># in line</th>
+                                                        <th class="border-0">Customer Name</th>
+                                                        <th class="border-0">Customer Contact</th>
+                                                        <th class="border-0">Size</th>
+                                                        <th class="border-0">Date Created</th>
+                                                        <th class="border-0">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php for($c=0; $c<$num_queue; $c++){ ?>
+                                                <?php $q = mysqli_fetch_assoc($result_queue);?>
+                                                    <tr>
+                                                        <td><?php echo $q['queue_number'];?></td>
+                                                        <td><?php echo $q['queue_cus_name'];?></td>
+                                                        <td><?php echo $q['queue_cus_contact'];?></td>
+                                                        <td><?php echo $q['queue_cus_size'];?> person</td>
+                                                        <td><?php echo $q['date_created'];?></td>
+                                                        <td><?php echo $q['queue_status'];?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                                    <tr>
+                                                        <td colspan="9"><a href="manage-queue.php" class="btn btn-primary float-right"><i class="fas fa-arrow-circle-up"></i> Serve Next</a><a href="manage-queue.php" class="btn btn-outline-light float-right">View Details</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

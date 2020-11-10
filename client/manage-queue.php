@@ -1,5 +1,6 @@
 <?php 
 include("include/connectdb.php");
+
 $qry_queue = "SELECT * FROM fos_queue 
 					WHERE client_uid =  '".$_SESSION['user_id']."'";  
 $result_queue = mysqli_query($db, $qry_queue);
@@ -25,7 +26,7 @@ if(!isset($user)) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profile</title>
+    <title>Manage Queue</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -92,15 +93,16 @@ if(!isset($user)) {
                         <!-- ============================================================== -->
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Responsive Table</h5>
+                                <h5 class="card-header">Virtual Queue</h5>
                                 <div class="card-body">
                                     <div class="table-responsive ">
                                     <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
+                                            <th scope="col"># in line</th>
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Customer Contact</th>
+                                            <th scope="col">Size</th>
                                             <th scope="col">Date Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -109,11 +111,12 @@ if(!isset($user)) {
                                     <?php for($c=0; $c<$num_queue; $c++){ ?>
                                     <?php $q = mysqli_fetch_assoc($result_queue);?>
                                         <tr>
-                                            <td scope="row"><?php echo $c+1;?></td>
+                                            <td scope="row"><?php echo $q['queue_number'];?></td>
                                             <td><?php echo $q['queue_cus_name'];?></td>
                                             <td><?php echo $q['queue_cus_contact'];?></td>
+                                            <td><?php echo $q['queue_cus_size'];?> person</td>
                                             <td><?php echo $q['date_created'];?></td>
-                                            <td><a href="remove-queue.php" class="btn btn-light rounded">Remove</a></td>
+                                            <td><a href="notify-sms.php?n=<?php echo $q['queue_cus_name'];?>" class="btn btn-info rounded">Notify</a> <a href="" class="btn btn-success rounded">Ready</a> <a href="wipe.php?exq=<?php echo $q['uid'];?>" class="btn btn-danger rounded"><i class="fas fa-times-circle"></i></a></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>

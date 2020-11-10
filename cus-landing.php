@@ -4,7 +4,8 @@ include("php/connectdb.php");
 //user session needs to be destroyed in this page
 $qry = "SELECT * FROM fos_landing 
             INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
-            WHERE client_uid = '".$_GET['r']."'";  
+            INNER JOIN fos_queue ON fos_landing.client_uid = fos_queue.client_uid
+            WHERE fos_landing.client_uid = '".$_GET['r']."' ORDER BY  fos_queue.queue_number DESC LIMIT 1";  
 $results = mysqli_query($db, $qry);
 $landing = mysqli_fetch_assoc($results);
 
@@ -187,7 +188,7 @@ $num_queue = mysqli_num_rows($result_queue);
           <ul class="list-group list-group-flush">
           <?php for($c=0; $c<1; $c++){ ?>
           <?php $q = mysqli_fetch_assoc($result_queue);?>
-            <li class="list-group-item d-flex justify-content-between align-items-center"><?php echo $q['queue_cus_name'];?> (<?php echo $q['queue_cus_size'];?> person)<span
+            <li class="list-group-item d-flex justify-content-between align-items-center"><?php echo $q['queue_cus_name'];?><?php if ($num_queue == 0){ }else {echo " (";}?><?php echo $q['queue_cus_size'];?><?php if ($num_queue == 0){ echo " - "; }else {echo " person)";}?><span
                 class="badge badge-<?php if($c == 0) { echo "success"; }else { echo "primary"; };?> badge-pill"><?php if($c == 0) { echo "Ready to be seated"; }else { echo $c+1; };?></span></li>
           <?php } ?>
           </ul>
@@ -244,6 +245,7 @@ $num_queue = mysqli_num_rows($result_queue);
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
+                <input type="hidden" name="curqNum" value="<?php echo $landing['queue_number'];?>">
                 <button type="submit" class="btn btn-primary" name="submit_queue">Submit </button>
               </div>
             </div>
@@ -269,6 +271,8 @@ $num_queue = mysqli_num_rows($result_queue);
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
+                <input type="hidden" name="curqNum" value="<?php echo $landing['queue_number'];?>">
+                <input type="hidden" name="Qcname" value="<?php echo $_SESSION['Qcname'];?>">
                 <button type="submit" class="btn btn-danger" name="delete_queue">Yes </button>
               </div>
             </div>

@@ -10,4 +10,9 @@ if(isset($_GET['delitms'])) {
     mysqli_query($db, $qry_delete_items);
     header('location: menu-items.php');
 }
+if (isset($_GET['exq'])) {
+	$qry_exit = "DELETE FROM fos_queue WHERE uid ='".$_GET['exq']."'";
+	mysqli_query($db, $qry_exit);
+    header('location: manage-queue.php');
+}
 ?>
