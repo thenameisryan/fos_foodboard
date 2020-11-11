@@ -83,6 +83,7 @@ if (isset($_POST['delete_queue'])) {
 	session_destroy();
 	unset($_SESSION['inq']);
 	unset($_SESSION['inqnum']);
+	unset($_SESSION['inqnum2']);
 	unset($_SESSION['Qcname']);
 	unset($_SESSION['Qccon']);
     header('location: cus-landing.php?r=' . $res_id);
