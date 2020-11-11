@@ -11,8 +11,16 @@ if(isset($_GET['delitms'])) {
     header('location: menu-items.php');
 }
 if (isset($_GET['exq'])) {
+    $qry_inqueue = "SELECT * FROM  fos_queue 
+            WHERE client_uid = '".$_SESSION['user_id']."' ORDER BY  queue_number DESC LIMIT 1";  
+    $result_inqueue = mysqli_query($db, $qry_inqueue);
+    $inq = mysqli_fetch_assoc($result_inqueue);
 	$qry_exit = "DELETE FROM fos_queue WHERE uid ='".$_GET['exq']."'";
-	mysqli_query($db, $qry_exit);
+    mysqli_query($db, $qry_exit);
+    $qry_update_q = "UPDATE fos_queue SET queue_number = queue_number - 1 
+						WHERE queue_number != '1' AND client_uid ='".$_SESSION['user_id']."' 
+						AND queue_number >= '".$inq['queue_number']."'";
+	mysqli_query($db, $qry_update_q);
     header('location: manage-queue.php');
 }
 ?>

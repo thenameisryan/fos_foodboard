@@ -11,6 +11,11 @@ $qry_queue = "SELECT * FROM fos_queue
 $result_queue = mysqli_query($db, $qry_queue);
 $num_queue = mysqli_num_rows($result_queue);
 
+$qry_inqueue = "SELECT * FROM  fos_queue 
+            WHERE client_uid = '".$_SESSION['user_id']."' ORDER BY  queue_number ASC LIMIT 1";  
+$result_inqueue = mysqli_query($db, $qry_inqueue);
+$inq = mysqli_fetch_assoc($result_inqueue);
+
 if(isset($_COOKIE["username"])) {
     $user = $_COOKIE["username"];
 }
@@ -173,7 +178,7 @@ if (isset($_GET['logout'])) {
                                                     </tr>
                                                 <?php } ?>
                                                     <tr>
-                                                        <td colspan="9"><a href="manage-queue.php" class="btn btn-primary float-right"><i class="fas fa-arrow-circle-up"></i> Serve Next</a><a href="manage-queue.php" class="btn btn-outline-light float-right">View Details</a></td>
+                                                        <td colspan="9"><a href="serve-next.php" class="btn btn-primary float-right"><i class="fas fa-arrow-circle-up"></i> Serve Next</a> <a href="ready.php?qindex=<?php echo $inq['uid'];?>" class="btn btn-success float-right">Ready</a> <a href="manage-queue.php" class="btn btn-outline-light float-right">View Details</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

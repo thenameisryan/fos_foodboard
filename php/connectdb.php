@@ -52,6 +52,7 @@ if (isset($_POST['submit_queue'])) {
 		$id = mysqli_fetch_assoc($result_id);
 		$_SESSION['inq'] = "true";
 		$_SESSION['inqnum'] = $id['uid'];
+		$_SESSION['inqnum2'] = $id['queue_number'];
 		$_SESSION['Qcname'] = $queue_cus_name;
     	$_SESSION['Qccon'] = $queue_cus_contact;
     

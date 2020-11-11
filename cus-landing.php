@@ -1,22 +1,29 @@
 <?php
 include("php/connectdb.php");
 
-//user session needs to be destroyed in this page
 $qry = "SELECT * FROM fos_landing 
+            INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
+            WHERE client_uid = '".$_GET['r']."'";  
+$results = mysqli_query($db, $qry);
+$landing = mysqli_fetch_assoc($results);
+
+$qry_inqueue = "SELECT * FROM fos_landing 
             INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
             INNER JOIN fos_queue ON fos_landing.client_uid = fos_queue.client_uid
             WHERE fos_landing.client_uid = '".$_GET['r']."' ORDER BY  fos_queue.queue_number DESC LIMIT 1";  
-$results = mysqli_query($db, $qry);
-$landing = mysqli_fetch_assoc($results);
+$result_inqueue = mysqli_query($db, $qry_inqueue);
+$inq = mysqli_fetch_assoc($result_inqueue);
 
 $qry_queue = "SELECT * FROM fos_queue 
 					WHERE client_uid = '".$_GET['r']."'"; 
 $result_queue = mysqli_query($db, $qry_queue);
 $num_queue = mysqli_num_rows($result_queue);
 
-// echo $_SESSION['inqnum'];
-// echo $_SESSION['Qcname'];
-// echo $_SESSION['Qccon'];
+$qry_queue2 = "SELECT * FROM fos_queue 
+					WHERE client_uid = '".$_GET['r']."'"; 
+$result_queue2 = mysqli_query($db, $qry_queue2);
+$num_queue2 = mysqli_num_rows($result_queue2);
+
 ?>
 
 <!doctype html>
@@ -188,17 +195,26 @@ $num_queue = mysqli_num_rows($result_queue);
           <ul class="list-group list-group-flush">
           <?php for($c=0; $c<1; $c++){ ?>
           <?php $q = mysqli_fetch_assoc($result_queue);?>
-            <li class="list-group-item d-flex justify-content-between align-items-center"><?php echo $q['queue_cus_name'];?><?php if ($num_queue == 0){ }else {echo " (";}?><?php echo $q['queue_cus_size'];?><?php if ($num_queue == 0){ echo " - "; }else {echo " person)";}?><span
+            <li class="list-group-item d-flex justify-content-between align-items-center"><?php if($q['queue_number'] == 1 && $q['queue_status']=='READY'){echo $q['queue_cus_name'];}?><?php if ($num_queue == 0){ }else { if($q['queue_number'] == 1 && $q['queue_status']=='READY') {echo " (";}}?><?php if($q['queue_number'] == 1 && $q['queue_status']=='READY') { echo $q['queue_cus_size'];}?><?php if($q['queue_status']=='WAITING'){ echo " - "; } if ($num_queue == 0){ echo " - "; }else { if($q['queue_number'] == 1 && $q['queue_status']=='READY') {echo " person)";}}?><span
                 class="badge badge-<?php if($c == 0) { echo "success"; }else { echo "primary"; };?> badge-pill"><?php if($c == 0) { echo "Ready to be seated"; }else { echo $c+1; };?></span></li>
           <?php } ?>
           </ul>
           <?php if (isset($_SESSION['inq']) && $_SESSION['inq'] == 'true') { ?>
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong>28</strong></span></span>
-            </li>
-          </ul>
-          <?php } ?>
+            <?php for($c=0; $c<1; $c++){ ?>
+          <?php $inq2 = mysqli_fetch_assoc($result_queue2);?>
+          
+            <?php if($inq2['queue_number'] == 1 && $inq2['queue_status']=='READY') { ?>
+          
+            <?php }else{ ?> 
+              <?php if($_SESSION['inqnum2'] != $inq2['queue_number']) { ?>
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo $inq['queue_number']?></strong></span></span>
+                </li>
+              </ul>
+              <?php }else{} ?>
+              <?php } ?>
+          <?php } } ?>
           <ul class="list-group">
             <?php if (isset($_SESSION['inq']) && $_SESSION['inq'] == 'true') { ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -245,7 +261,7 @@ $num_queue = mysqli_num_rows($result_queue);
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
-                <input type="hidden" name="curqNum" value="<?php echo $landing['queue_number'];?>">
+                <input type="hidden" name="curqNum" value="<?php echo $inq['queue_number'];?>">
                 <button type="submit" class="btn btn-primary" name="submit_queue">Submit </button>
               </div>
             </div>
@@ -271,7 +287,7 @@ $num_queue = mysqli_num_rows($result_queue);
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <input type="hidden" name="res_id" value="<?php echo $_GET['r'];?>">
-                <input type="hidden" name="curqNum" value="<?php echo $landing['queue_number'];?>">
+                <input type="hidden" name="curqNum" value="<?php echo $inq['queue_number'];?>">
                 <input type="hidden" name="Qcname" value="<?php echo $_SESSION['Qcname'];?>">
                 <button type="submit" class="btn btn-danger" name="delete_queue">Yes </button>
               </div>

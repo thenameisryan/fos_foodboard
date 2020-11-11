@@ -12,7 +12,7 @@
                     	aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> Quick Actions</a>
                     <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
                     	<li>
-                    		<a href="#" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-up"></i> Serve Next</a>
+                    		<a href="serve-next.php" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-up"></i> Serve Next</a>
                     	</li>
                     </ul>
                 </li>

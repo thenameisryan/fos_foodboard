@@ -103,6 +103,7 @@ if(!isset($user)) {
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Customer Contact</th>
                                             <th scope="col">Size</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Date Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -115,8 +116,9 @@ if(!isset($user)) {
                                             <td><?php echo $q['queue_cus_name'];?></td>
                                             <td><?php echo $q['queue_cus_contact'];?></td>
                                             <td><?php echo $q['queue_cus_size'];?> person</td>
+                                            <td><?php echo $q['queue_status'];?></td>
                                             <td><?php echo $q['date_created'];?></td>
-                                            <td><a href="notify-sms.php?n=<?php echo $q['queue_cus_name'];?>" class="btn btn-info rounded">Notify</a> <a href="" class="btn btn-success rounded">Ready</a> <a href="wipe.php?exq=<?php echo $q['uid'];?>" class="btn btn-danger rounded"><i class="fas fa-times-circle"></i></a></td>
+                                            <td><a href="notify-sms.php?n=<?php echo $q['queue_cus_name'];?>" class="btn btn-info rounded">Notify</a> <a href="ready.php?q=<?php echo $q['uid'];?>" class="btn btn-success rounded">Ready</a> <a href="wipe.php?exq=<?php echo $q['uid'];?>" class="btn btn-danger rounded"><i class="fas fa-times-circle"></i></a></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
