@@ -113,13 +113,13 @@ if(!isset($user)) {
                                     <div class="product-details">
                                         <div class="border-bottom pb-3 mb-3">
                                             <h2 class="mb-3"><?php echo $item['prod_name'];?></h2>
-                                            <div class="product-rating d-inline-block float-right">
+                                            <!-- <div class="product-rating d-inline-block float-right">
                                                 <i class="fa fa-fw fa-star"></i>
                                                 <i class="fa fa-fw fa-star"></i>
                                                 <i class="fa fa-fw fa-star"></i>
                                                 <i class="fa fa-fw fa-star"></i>
                                                 <i class="fa fa-fw fa-star"></i>
-                                            </div>
+                                            </div> -->
                                             <h3 class="mb-0 text-primary">RM<?php echo $item['prod_price'];?></h3>
                                         </div>
                                         <div class="product-description">

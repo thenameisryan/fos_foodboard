@@ -66,7 +66,7 @@ include("include/connectdb.php");
                     <input type="text" class="form-control phone-inputmask" name="res_contact" id="phone-mask"
                         im-insert="true"
                         value="<?php if(isset($_POST['res_contact'])) {echo $_POST['res_contact'];}?>"
-                        placeholder="Restaurant Contact">
+                        placeholder="Restaurant Contact" required="">
                 </div>
                 <div class="custom-file mb-3">
                     <input type="file" class="custom-file-input" name="fileToUpload" id="fileToUpload" required="">

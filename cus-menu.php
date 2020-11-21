@@ -160,10 +160,10 @@ $num_cat = mysqli_num_rows($result_cat);
     <?php $name = mysqli_fetch_assoc($result_name);?><?php echo $name['client_res_name'];?><?php } ?></a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0" method="get" action="cus-menu.php" id="searchForm">
+        <!-- <form class="form-inline mt-2 mt-md-0" method="get" action="cus-menu.php" id="searchForm">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="searchForm">Search</button>
-        </form>
+        </form> -->
       </div>
     </nav>
   </header>
@@ -325,7 +325,7 @@ $num_cat = mysqli_num_rows($result_cat);
         </div>
         <div class="modal-footer">
           <button class="clear-cart btn btn-danger">Clear Cart</button></div>
-          <button type="submit" name="submit_order" class="clear-cart btn btn-success">Submit Order</button>
+          <button name="submit_order" class="clear-cart btn btn-success">Submit Order</button>
         </div>
       </div>
     </div>

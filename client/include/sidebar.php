@@ -41,6 +41,17 @@
 							</ul>
 						</div>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+							data-target="#submenu-14" aria-controls="submenu-14"><i class="fas fa-f fa-shopping-basket"></i>Orders</a>
+						<div id="submenu-14" class="collapse submenu" style="">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="manage-order.php">Manage Orders</a>
+								</li>
+							</ul>
+						</div>
+					</li>
 					<li class="nav-divider">
 						Virtual Queue
 					</li>

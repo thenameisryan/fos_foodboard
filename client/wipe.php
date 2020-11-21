@@ -23,4 +23,9 @@ if (isset($_GET['exq'])) {
 	mysqli_query($db, $qry_update_q);
     header('location: manage-queue.php');
 }
+if (isset($_GET['delord'])) {
+	$qry_delord = "DELETE FROM fos_queue WHERE uid ='".$_GET['exq']."'";
+	mysqli_query($db, $qry_delord);
+    header('location: manage-order.php');
+}
 ?>

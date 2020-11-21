@@ -226,7 +226,7 @@ $num_queue2 = mysqli_num_rows($result_queue2);
             </li>
           <?php } ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span style="font-size:14px;"> estimated waiting time: <span style="text-decoration:underline;"><strong>28</strong></span> minutes </span>
+            <span style="font-size:14px;"> estimated waiting time: <span style="text-decoration:underline;"><strong>15</strong></span> minutes </span>
             </li>
           </ul>
           <hr class="featurette-divider">

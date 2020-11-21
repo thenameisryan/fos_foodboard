@@ -7,15 +7,6 @@
 		</button>
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto navbar-right-top">
-				<li class="nav-item dropdown connection">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    	aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> Quick Actions</a>
-                    <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
-                    	<li>
-                    		<a href="serve-next.php" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-up"></i> Serve Next</a>
-                    	</li>
-                    </ul>
-                </li>
 				<li class="nav-item dropdown nav-user">
 					<a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"><img src="assets/images/user.png" alt=""

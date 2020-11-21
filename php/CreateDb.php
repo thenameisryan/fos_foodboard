@@ -61,7 +61,7 @@ class CreateDb
 
     // get product from the database
     public function getData(){
-        $sql = "SELECT * FROM $this->tablename";
+        $sql = "SELECT * FROM $this->tablename WHERE client_uid ='".$_GET['r']."'";
 
         $result = mysqli_query($this->con, $sql);
 

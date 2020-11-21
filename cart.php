@@ -5,6 +5,7 @@ session_start();
 require_once ("php/CreateDb.php");
 require_once ("php/component.php");
 
+$d = $_GET['r'];
 $db = new CreateDb("fos_foodboard", "fos_prod");
 
 if (isset($_POST['remove'])){
@@ -12,7 +13,7 @@ if (isset($_POST['remove'])){
         foreach ($_SESSION['cart'] as $key => $value){
             if($value["product_id"] == $_GET['id']){
               unset($_SESSION['cart'][$key]);
-              echo "<script>window.location = 'cart.php'</script>";
+              header('location: cart.php?r='.$d);
             }
         }
     }
@@ -29,7 +30,6 @@ if (isset($_POST['minusqty'])){
         echo "<script>alert('Product qty -1')</script>";
     }
 }
-
 
 ?>
 
@@ -84,7 +84,7 @@ if (isset($_POST['minusqty'])){
                         while ($row = mysqli_fetch_assoc($result)){
                             foreach ($product_id as $id){
                                 if ($row['uid'] == $id){
-                                    cartElement($row['prod_image'], $row['prod_name'],$row['prod_price'], $row['uid']);
+                                    cartElement($row['prod_image'], $row['prod_name'],$row['prod_price'], $row['uid'],$row['client_uid']);
                                     $total = $total + (float)$row['prod_price'];
                                 }
                             }

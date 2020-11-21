@@ -99,13 +99,13 @@ if(!isset($user)) {
                                         <div class="product-content">
                                             <div class="product-content-head">
                                                 <h3 class="product-title"><?php echo $prod['prod_name'];?></h3>
-                                                <div class="product-rating d-inline-block">
+                                                <!-- <div class="product-rating d-inline-block">
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
-                                                </div>
+                                                </div> -->
                                                 <!-- .figure-caption -->
                                         <figcaption class="figure-caption">
                                             <p class="text-muted mb-0"><?php echo $prod['prod_desc'];?></p>

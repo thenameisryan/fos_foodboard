@@ -128,14 +128,14 @@ if (isset($_GET['logout'])) {
 							                    <?php $order = mysqli_fetch_assoc($result_order);?>
                                                     <tr>
                                                         <td><?php echo $c+1;?></td>
-                                                        <td><?php order['order_number'];?></td>
-                                                        <td><?php order['date_created'];?></td>
-                                                        <td><?php order['order_cusid'];?></td>
-                                                        <td><?php order['order_status'];?></td>
+                                                        <td><?php echo $order['order_number'];?></td>
+                                                        <td><?php echo $order['date_created'];?></td>
+                                                        <td><?php echo $order['order_cusid'];?></td>
+                                                        <td><?php echo $order['order_status'];?></td>
                                                     </tr>
                                                 <?php } ?>
                                                     <tr>
-                                                        <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
+                                                        <td colspan="9"><a href="manage-order.php" class="btn btn-outline-light float-right">View Details</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

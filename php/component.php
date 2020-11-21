@@ -1,26 +1,17 @@
 <?php
 
-function component($productname, $productprice, $productimg, $productid){
+function component($productname, $productprice, $productimg, $productid,$clientID){
     $element = "
     
     <div class=\"col-md-3 col-sm-6 my-3 my-md-0\">
-                <form action=\"index.php\" method=\"post\">
+                <form action=\"index.php?r=$clientID\" method=\"post\">
                     <div class=\"card \">
                         <div>
                             <img src=\"client/$productimg\" alt=\"Image\" class=\"img-fluid card-img-top\">
                         </div>
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">$productname</h5>
-                            <h6>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"far fa-star\"></i>
-                            </h6>
-                            <p class=\"card-text\">
-                                Some quick example text to build on the card.
-                            </p>
+                            
                             <h5>
                              
                                 <span class=\"price\">RM$productprice</span>
@@ -36,10 +27,10 @@ function component($productname, $productprice, $productimg, $productid){
     echo $element;
 }
 
-function cartElement($productimg, $productname, $productprice, $productid){
+function cartElement($productimg, $productname, $productprice, $productid,$clientID){
     $element = "
     
-    <form action=\"cart.php?action=remove&id=$productid\" method=\"post\" class=\"cart-items\">
+    <form action=\"cart.php?action=remove&id=$productid&r=$clientID\" method=\"post\" class=\"cart-items\">
                     <div class=\"border rounded\">
                         <div class=\"row bg-white\">
                             <div class=\"col-md-3 pl-0\">
