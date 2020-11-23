@@ -145,7 +145,7 @@ $('.clear-cart').click(function () {
 
 
 function displayCart() {
-    //cartArray[i].price is to show price of each item
+    //cartArray[i].price is to show the price of each item
     var cartArray = shoppingCart.listCart();
     var output = "";
     for (var i in cartArray) {
