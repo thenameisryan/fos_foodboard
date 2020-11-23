@@ -234,7 +234,7 @@ $num_cat = mysqli_num_rows($result_cat);
       </nav> -->
 
   <!-- Latest Product Section Begin -->
-<form method="post" action="cus-menu.php" id="submitForm">
+<form method="post" action="cus-menu.php?r=<?php echo $_GET['r'];?>" id="submitForm">
   <section class="latest-product spad">
     <div class="container">
       <div class="row">
