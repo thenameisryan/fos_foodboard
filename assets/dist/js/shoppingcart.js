@@ -162,8 +162,8 @@ function displayCart() {
             "<td>" + cartArray[i].name + "</td>" +
             "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
             cartArray[i].name + ">-</button>" +
-            "<input type='text' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" +
-            cartArray[i].count + "'readonly>" +
+            "<input type='text' class='item-count form-control' data-name=" + cartArray[i].name + " value=" +
+            cartArray[i].count + " readonly>" +
             "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name +
             ">+</button></div></td>" +
             "<td>" + cartArray[i].total + "</td>" +
