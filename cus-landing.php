@@ -31,6 +31,8 @@ $num_queue2 = mysqli_num_rows($result_queue2);
 
 <head>
   <meta charset="utf-8">
+  <!-- -------REFRESHES EVERY 10 SECONDS-------- -->
+  <!-- <meta http-equiv="Refresh" content="10"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
@@ -170,7 +172,7 @@ $num_queue2 = mysqli_num_rows($result_queue2);
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlTextarea1">Review </label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reviewer_review" value="<?php if(isset($_POST['reviewer_review'])) {echo $_POST['reviewer_review'];}?>"></textarea>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reviewer_review"><?php if(isset($_POST['reviewer_review'])) { echo htmlentities($_POST['reviewer_review']); }?></textarea>
                 </div>
               </div>
               <div class="modal-footer">
@@ -203,16 +205,21 @@ $num_queue2 = mysqli_num_rows($result_queue2);
             <?php for($c=0; $c<1; $c++){ ?>
           <?php $inq2 = mysqli_fetch_assoc($result_queue2);?>
           
-            <?php if($inq2['queue_number'] == 1 && $inq2['queue_status']=='READY') { ?>
-          
+            <?php if($_SESSION['inqnum2'] == 1 && $inq2['queue_status']=='READY') { ?>
             <?php }else{ ?> 
-              <?php if($_SESSION['inqnum2'] != $inq2['queue_number']) { ?>
-              <ul class="list-group">
+              <?php if($_SESSION['inqnum2'] == $inq2['queue_number']) { ?>
+                <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo $inq['queue_number']?></strong></span></span>
+                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo "1";?></strong></span></span>
                 </li>
               </ul>
-              <?php }else{} ?>
+              <?php }else{?>
+                <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo $_SESSION['inqnum2'];?></strong></span></span>
+                </li>
+              </ul>
+              <?php } ?>
               <?php } ?>
           <?php } } ?>
           <ul class="list-group">

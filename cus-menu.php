@@ -149,11 +149,6 @@ $num_cat = mysqli_num_rows($result_cat);
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="cus-landing.php?r=<?php echo $_GET['r'];?>"> Back</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><?php for($c=0; $c<$num_name; $c++) { ?>
@@ -164,7 +159,6 @@ $num_cat = mysqli_num_rows($result_cat);
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="searchForm">Search</button>
         </form> -->
-      </div>
     </nav>
   </header>
   <!-- Start Sub-header -->
@@ -246,9 +240,9 @@ $num_cat = mysqli_num_rows($result_cat);
               <div class="card" style="width: 20rem;">
               <img class="card-img-top" src="<?php echo $client_img_path?>" alt="Image">
                 <div class="card-block">
-                  <h4 class="card-title"><?php echo $prod['prod_name'];?></h4>
-                  <p class="card-text">Price: RM<?php echo $client_prod_price;?></p>
-                  <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary">Add to cart</a>
+                  <h4 class="card-title" style="text-align: center;"><?php echo $prod['prod_name'];?></h4>
+                  <p class="card-text" style="text-align: center;">Price: RM<?php echo $client_prod_price;?></p>
+                  <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary btn-block">Add to cart</a>
                 </div>
               </div>
             </div>
@@ -292,14 +286,14 @@ $num_cat = mysqli_num_rows($result_cat);
 
   </div>
   </div>
-  <nav class="navbar navbar-inverse bg-inverse fixed-bottom bg-faded">
+  <nav class="navbar navbar-inverse bg-inverse fixed-bottom bg-dark">
     <ul class="nav navbar-nav">
       <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span
             class="total-count"></span>)</button></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-center">
-      <li><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Total: <span class="total-cart"></a>
+      <li><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Total: RM <span class="total-cart"></a>
       </li>
     </ul>
 

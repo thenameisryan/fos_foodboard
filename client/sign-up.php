@@ -54,13 +54,11 @@ include("include/connectdb.php");
                 </div>
                 <div class="form-group">
                     <textarea class="form-control form-control-lg" rows="3" name="res_desc"
-                        value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}?>"
-                        placeholder="Restaurant Description"></textarea>
+                        placeholder="<?php if(!isset($_POST['res_desc'])) { echo "Restaurant Description"; }?>"><?php if(isset($_POST['res_desc'])) { echo htmlentities($_POST['res_desc']); }?></textarea>
                 </div>
                 <div class="form-group">
                     <textarea class="form-control form-control-lg" rows="3" name="res_location"
-                        value="<?php if(isset($_POST['res_location'])) {echo $_POST['res_contact'];}?>"
-                        placeholder="Restaurant Location"></textarea>
+                        placeholder="<?php if(!isset($_POST['res_location'])) { echo "Restaurant Location"; }?>"><?php if(isset($_POST['res_location'])) { echo htmlentities($_POST['res_location']); }?></textarea>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control phone-inputmask" name="res_contact" id="phone-mask"

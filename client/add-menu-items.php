@@ -98,7 +98,7 @@ if(!isset($user)) {
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Product Description</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="prod_desc" value="<?php if(isset($_POST['prod_desc'])) {echo $_POST['prod_desc'];}?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="prod_desc"><?php if(isset($_POST['prod_desc'])) { echo htmlentities($_POST['prod_desc']); }?></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Product Price</label>

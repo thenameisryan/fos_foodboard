@@ -137,11 +137,11 @@ if(!isset($user)) {
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Restaurant Description</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" value="<?php if(isset($_POST['res_desc'])) {echo $_POST['res_desc'];}else{echo $landing['landing_desc'];}?>" placeholder="<?php echo $landing['landing_desc'];?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="res_desc" placeholder="<?php echo $landing['landing_desc'];?>"><?php if(isset($_POST['res_desc'])) { echo htmlentities($_POST['res_desc']); }else{ echo $landing['landing_desc'];}?></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea2">Restaurant Location</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" name="res_location" value="<?php if(isset($_POST['res_location'])) {echo $_POST['res_location'];}else{echo $landing['landing_location'];}?>" placeholder="<?php echo $landing['landing_location'];?>"></textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" name="res_location" placeholder="<?php echo $landing['landing_location'];?>"><?php if(isset($_POST['res_location'])) { echo htmlentities($_POST['res_location']); }else{ echo $landing['landing_location'];}?></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Restaurant Contact <small class="text-muted">(999) 999-9999</small></label>
