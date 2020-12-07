@@ -24,8 +24,10 @@ if (isset($_GET['exq'])) {
     header('location: manage-queue.php');
 }
 if (isset($_GET['delord'])) {
-	$qry_delord = "DELETE FROM fos_queue WHERE uid ='".$_GET['exq']."'";
-	mysqli_query($db, $qry_delord);
+	$qry_delord = "DELETE FROM fos_order WHERE uid ='".$_GET['delord']."'";
+    mysqli_query($db, $qry_delord);
+    $qry_delorditem = "DELETE FROM fos_orderitem WHERE order_number ='".$_GET['delord']."'";
+	mysqli_query($db, $qry_delorditem);
     header('location: manage-order.php');
 }
 ?>

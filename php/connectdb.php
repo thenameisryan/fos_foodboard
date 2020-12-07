@@ -13,6 +13,31 @@ if (!$db) {
     die('Could not connect: ' . mysql_error());
 }
 
+class Database {
+	public $host = "localhost";
+	public $user = "root";
+	public $pass ="";
+	public $dbname ="fos_foodboard";
+
+	public $conn;
+
+	public function __construct() {
+		$this->connectDB();
+	}
+
+	private function connectDB() {
+		$this->conn = new mysqli($this->host,$this->user,$this->pass,$this->dbname);
+
+		if (!$this->conn) {
+			die("Connection failed: ".$this->conn->connect_error);
+		} 
+		
+	}
+
+	
+	
+}
+
 //REVIEW FORM
 if (isset($_POST['submit_review'])) {
 	$reviewer_rating = mysqli_real_escape_string($db, $_POST['reviewer_rating']);
@@ -29,6 +54,7 @@ if (isset($_POST['submit_review'])) {
 }
 
 if (isset($_POST['submit_order'])) {
+	session_destroy();
 	header('location: payment.php');
 }
 

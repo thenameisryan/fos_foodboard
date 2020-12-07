@@ -138,8 +138,8 @@ if(!isset($user)) {
                                                 <label>Product Price</label>
                                                 <div class="form-group input-group mb-3">
                                                     <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                    <input type="number" class="form-control"
-                                                        id="currency-mask" name="item_price" value="<?php if(isset($_POST['item_price'])) {echo $_POST['item_price'];}?>" placeholder="<?php echo $item['prod_price'] ;?>">
+                                                    <input type="text" class="form-control"
+                                                         name="item_price" value="<?php if(isset($_POST['item_price'])) {echo $_POST['item_price'];}?>" placeholder="<?php echo $item['prod_price'] ;?>">
                                                 </div>
                                             </div>
                                             <div class="product-description">

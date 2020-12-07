@@ -73,7 +73,8 @@ if(isset($_GET['search'])) {
                         
                     <?php }elseif(isset($_GET['search'])){ ?>
                         <div class="container-fluid">
-                        <h3 class="mt-4">No search results</h3>
+                        <h3 class="mt-4 text-center">No search results</h3>
+                        </div>
                     <?php } ?>
                 </main>
             <div id="layoutAuthentication_footer">

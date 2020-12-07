@@ -1,8 +1,8 @@
 <?php 
 include("include/connectdb.php");
 
-$qry_order = "SELECT * FROM fos_order 
-					WHERE client_uid =  '".$_SESSION['user_id']."' ORDER BY date_created DESC";  
+$qry_order = "SELECT * FROM fos_orderitem 
+					WHERE order_number =  '".$_GET['id']."'";  
 $result_order = mysqli_query($db, $qry_order);
 $num_order = mysqli_num_rows($result_order);
 
@@ -26,7 +26,7 @@ if(!isset($user)) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manage Orders</title>
+    <title>Order Detail</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -69,14 +69,15 @@ if(!isset($user)) {
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">Manage Orders </h2>
+                            <h2 class="pageheader-title">Order Detail </h2>
                             <p class="pageheader-text">Text goes in here.</p>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
                                         <li class="breadcrumb-item">Orders</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Manage Orders</li>
+                                        <li class="breadcrumb-item">Manage Orders</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Order Detail</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -100,23 +101,26 @@ if(!isset($user)) {
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
                                                         <th class="border-0">#</th>
-                                                        <th class="border-0">Order ID</th>
-                                                        <th class="border-0">Order Time</th>
-                                                        <th class="border-0">Customer ID</th>
-                                                        <th class="border-0">Action</th>
+                                                        <th class="border-0">Order Number</th>
+                                                        <th class="border-0">Product Name</th>
+                                                        <th class="border-0">Product Price</th>
+                                                        <th class="border-0">Product Quantity</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php for($c=0; $c<$num_order; $c++){ ?>
+                                                <?php $total = 0; for($c=0; $c<$num_order; $c++){ ?>
 							                    <?php $order = mysqli_fetch_assoc($result_order);?>
                                                     <tr>
                                                         <td><?php echo $c+1;?></td>
-                                                        <td><a href="order-detail.php?id=<?php echo $order['uid'];?>"><?php echo $order['uid'];?></a></td>
-                                                        <td><?php echo $order['date_created'];?></td>
-                                                        <td><?php echo $order['order_cusid'];?></td>
-                                                        <td> <a href="wipe.php?delord=<?php echo $order['uid'];?>" class="btn btn-danger rounded"><i class="fas fa-times-circle"></i></a></td>
+                                                        <td><?php echo $order['order_number'];?></td>
+                                                        <td><?php echo $order['prod_name'];?></td>
+                                                        <td>RM <?php echo $order['prod_price'];?></td>
+                                                        <td><?php echo $order['prod_quantity'];?></td>
                                                     </tr>
-                                                <?php } ?>
+                                                <?php $total = $total + ($order["prod_quantity"] * $order["prod_price"]); } ?> 
+                                                    <tr>
+                                                        <td colspan="9"><span class="float-right" style="font-weight:bold;">Total RM<?php echo $total;?></span></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

@@ -22,7 +22,7 @@
     <!-- ============================================================== -->
     <div class="splash-container">
         <div class="card ">
-            <div class="card-header text-center"> <button onclick="goBack()" class="footer-link">Back</button></div>
+            <div class="card-header text-center"> <button onclick="goBack()" class="footer-link">Return to Menu</button></div>
             <div class="card-body">
 			<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
 			<script>paypal.Buttons().render('body');</script><br>
@@ -43,6 +43,7 @@
     <script src="assets/vendor/inputmask/js/jquery.inputmask.bundle.js"></script>
     <script>
 function goBack() {
+  window.history.back();
   window.history.back();
 }
 </script>

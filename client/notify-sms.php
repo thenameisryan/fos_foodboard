@@ -5,11 +5,11 @@
     $restaurantName = $_SESSION['res_name'];
     $cusName = $_GET['n'];
 
-    $liveAPIkey = "PvamK0S38HbhAbm7bJe2U4n8b"; //change to this during VIVA presentation
+    $liveAPIkey = ""; //change to this during VIVA presentation
     $testAPIkey = "hSwqwVnx8Cxnbmyj4kAg9Ivmo";
     $msgBody = "Hi $cusName, you are ready to be seated. From " . $restaurantName;
 
-	$MessageBird = new \MessageBird\Client($testAPIkey);
+	$MessageBird = new \MessageBird\Client($liveAPIkey);
 	$Message = new \MessageBird\Objects\Message();
 	$Message->originator = 'FoodBoard';
 	$Message->recipients = array(+60164157901);

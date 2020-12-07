@@ -2,7 +2,7 @@
 include("include/connectdb.php");
 
 $qry_order = "SELECT * FROM fos_order
-        WHERE client_uid = '".$_SESSION['user_id']."'";  
+        WHERE client_uid = '".$_SESSION['user_id']."' ORDER BY date_created DESC";  
 $result_order = mysqli_query($db, $qry_order);
 $num_order = mysqli_num_rows($result_order);
 
@@ -120,7 +120,6 @@ if (isset($_GET['logout'])) {
                                                         <th class="border-0">Order ID</th>
                                                         <th class="border-0">Order Time</th>
                                                         <th class="border-0">Customer ID</th>
-                                                        <th class="border-0">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -128,10 +127,9 @@ if (isset($_GET['logout'])) {
 							                    <?php $order = mysqli_fetch_assoc($result_order);?>
                                                     <tr>
                                                         <td><?php echo $c+1;?></td>
-                                                        <td><?php echo $order['order_number'];?></td>
+                                                        <td><a href="order-detail.php?id=<?php echo $order['uid'];?>"><?php echo $order['uid'];?></a></td>
                                                         <td><?php echo $order['date_created'];?></td>
                                                         <td><?php echo $order['order_cusid'];?></td>
-                                                        <td><?php echo $order['order_status'];?></td>
                                                     </tr>
                                                 <?php } ?>
                                                     <tr>

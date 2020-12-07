@@ -1,5 +1,6 @@
 <?php
 include("php/connectdb.php");
+$obj = new Database();
 
 $qry_name = "SELECT * FROM fos_client
         WHERE uid = '".$_GET['r']."'";  
@@ -37,6 +38,13 @@ $num_cat = mysqli_num_rows($result_cat);
   <link href="assets/dist/css/bootstrap.css" rel="stylesheet">
 
   <style>
+     .product-display {
+    background-color:#f0f0f0;
+    border-radius:5px; padding:16px;
+    height:460px;
+    text-align:center;
+
+ }
     .show-cart li {
       display: flex;
     }
@@ -179,129 +187,36 @@ $num_cat = mysqli_num_rows($result_cat);
       <a class="nav-link" href="#">Alcohol</a> -->
     </nav>
   </div>
-  <!-- End Sub-header -->
-  <!-- <div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class=".col-6 .col-md-4 d-md-block bg-light">
-        <div class="sidebar-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">
-                Appetizers 
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Main
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Favourites
-              </a>
-            </li>
-          </ul>
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Beverages</span>
-            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-              <span data-feather="plus-circle"></span>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Homemade
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Sodas
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Alcohol
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav> -->
 
   <!-- Latest Product Section Begin -->
-<form method="post" action="cus-menu.php?r=<?php echo $_GET['r'];?>" id="submitForm">
   <section class="latest-product spad">
-    <div class="container">
-      <div class="row">
-          <?php for($c=0; $c<$num_items; $c++){ ?>
-          <?php $prod = mysqli_fetch_assoc($result_items);?>
-          <?php $client_img_path = "client/".$prod['prod_image'];?>
-          <?php $client_prod_price = number_format(($prod['prod_price']*1.0),2);?>
-            <div class="col-lg-4 col-md-6">
-              <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="<?php echo $client_img_path?>" alt="Image">
-                <div class="card-block">
-                  <h4 class="card-title" style="text-align: center;"><?php echo $prod['prod_name'];?></h4>
-                  <p class="card-text" style="text-align: center;">Price: RM<?php echo $client_prod_price;?></p>
-                  <a href="#" data-name="<?php echo $prod['prod_name'];?>" data-price="<?php echo $client_prod_price;?>" class="add-to-cart btn btn-primary btn-block">Add to cart</a>
-                </div>
-              </div>
-            </div>
-          <?php } ?>
-        <!-- <div class="latest-product__slider owl-carousel">
-                <div class="latest-prdouct__slider__item">
-                    <a href="#" class="latest-product__item">
-                        <div class="latest-product__item__pic">
-                            <img src="img/latest-product/lp-1.jpg" alt="">
-                        </div>
-                        <div class="latest-product__item__text">
-                            <h6>Food Name</h6>
-                            <span>$30.00</span>
-                        </div>
-                    </a>
-                    <a href="#" class="latest-product__item">
-                        <div class="latest-product__item__pic">
-                            <img src="img/latest-product/lp-2.jpg" alt="">
-                        </div>
-                        <div class="latest-product__item__text">
-                            <h6>Food Name</h6>
-                            <span>$30.00</span>
-                        </div>
-                    </a>
-                    <a href="#" class="latest-product__item">
-                        <div class="latest-product__item__pic">
-                            <img src="img/latest-product/lp-3.jpg" alt="">
-                        </div>
-                        <div class="latest-product__item__text">
-                            <h6>Food Name</h6>
-                            <span>$30.00</span>
-                        </div>
-                    </a>
-                </div>
-              </div> -->
-      
-      </div>
-    </div>
-  </section>
-  <!-- Latest Product Section End -->
-
-  </div>
-  </div>
-  <nav class="navbar navbar-inverse bg-inverse fixed-bottom bg-dark">
-    <ul class="nav navbar-nav">
-      <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span
-            class="total-count"></span>)</button></li>
-    </ul>
-
-    <ul class="nav navbar-nav navbar-center">
-      <li><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Total: RM <span class="total-cart"></a>
-      </li>
-    </ul>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li><button type="submit" name="submit_order" class="clear-cart btn btn-success">Submit Order</button></li>
-    </ul>
-  </nav>
-  <!-- Modal -->
+  <div class="container" > 
+                     <!-- <li><a data-toggle="tab" href="#cart">Cart <span class="badge"> -->
+                     <div class="row">
+                     <?php  
+                     $query = "SELECT * FROM fos_prod WHERE client_uid = '".$_GET['r']."' ORDER BY uid ASC";  
+                     $result = $obj->conn->query($query);  
+                     while($row = $result->fetch_assoc())  
+                     {  
+                     ?>  
+                     
+                     <div class="col-lg-4" style="margin-bottom: 20px;">  
+                          <div class="product-display">  
+                               <img src="client/<?php echo $row["prod_image"]; ?>" class="card-img-top" /><br />  
+                               <h4 class="text-info"><?php echo $row["prod_name"]; ?></h4>  
+                               <h4 class="text-danger">RM <?php echo $row["prod_price"]; ?></h4>  
+                               <input type="text" name="quantity" id="quantity<?php echo $row["uid"]; ?>" class="form-control" value="1" />  
+                               <input type="hidden" name="hidden_name" id="name<?php echo $row["uid"]; ?>" value="<?php echo $row["prod_name"]; ?>" />  
+                               <input type="hidden" name="hidden_price" id="price<?php echo $row["uid"]; ?>" value="<?php echo $row["prod_price"]; ?>" />  
+                               <input type="button" name="add_to_cart" id="<?php echo $row["uid"]; ?>" style="margin-top:5px;" class="btn btn-primary form-control add_to_cart" value="Add to Cart" />  
+                          </div>  
+                     </div> 
+                      
+                     <?php  
+                     }  
+                     ?>  
+                     </div>  
+                <!-- Modal -->
   <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
@@ -312,19 +227,90 @@ $num_cat = mysqli_num_rows($result_cat);
           </button>
         </div>
         <div class="modal-body">
-          <table class="show-cart table">
-
-          </table>
-          <div>Total price: $<span class="total-cart"></span></div>
+        <div class="table-responsive" id="order_table">  
+                               <table class="table table-bordered">  
+                                    <tr>  
+                                         <th width="40%">Product Name</th>  
+                                         <th width="10%">Quantity</th>  
+                                         <th width="20%">Price (RM)</th>  
+                                         <th width="15%">Total (RM)</th>  
+                                         <th width="5%">Action</th>  
+                                    </tr>  
+                                    <?php  
+                                    if(!empty($_SESSION["shopping_cart"]))  
+                                    {  
+                                         $total = 0;  
+                                         foreach($_SESSION["shopping_cart"] as $keys => $values)  
+                                         {                                               
+                                    ?>  
+                                    <tr>  
+                                         <td><?php echo $values["product_name"]; ?></td>  
+                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["product_id"]; ?>" value="<?php echo $values["product_quantity"]; ?>" data-product_id="<?php echo $values["product_id"]; ?>" class="form-control quantity" /></td>  
+                                         <td align="right"><?php echo $values["product_price"]; ?></td>  
+                                         <td align="right"><?php echo number_format($values["product_quantity"] * $values["product_price"], 2); ?></td>  
+                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["product_id"]; ?>">X</button></td>  
+                                    </tr>  
+                                    <?php  
+                                              $total = $total + ($values["product_quantity"] * $values["product_price"]);
+                                              $_SESSION['nav_total_price'] = $total;
+                                         }  
+                                    ?>  
+                                    <tr>  
+                                         <td colspan="3" align="right">Total (RM)</td>  
+                                         <td align="right"><?php echo number_format($total, 2); ?></td>  
+                                         <td></td>  
+                                    </tr>
+                                         <tr>  
+                                         <td colspan="5" align="center">
+                                           <form action="cart.php" method="post">
+                                           <div class="modal-footer"></div>
+                                            <input type="hidden" name="client_id" value="<?php echo $_GET['r'];?>">
+                                             <input type="submit" name="place_order" value="Submit Order" class="btn btn-success btn-block">
+                                           
+                                         </td>  
+                                    
+                                    </tr>
+                                    <?php  
+                                    }  
+                                    ?>  
+                               </table>  
+                          </div>
         </div>
-        <div class="modal-footer">
-          <button class="clear-cart btn btn-danger">Clear Cart</button></div>
-          <button name="submit_order" class="clear-cart btn btn-success">Submit Order</button>
         </div>
       </div>
     </div>
   </div>
-</form>
+           </div> 
+  </section>
+  <!-- Latest Product Section End -->
+
+  </div>
+  </div>
+  <nav class="navbar navbar-inverse bg-inverse fixed-bottom bg-dark">
+    <ul class="nav navbar-nav">
+      <li><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cart">Cart (<span class="badge">
+                      <?php 
+                        if(isset($_SESSION["shopping_cart"]))
+                        {
+                         echo count($_SESSION["shopping_cart"]);
+                        }
+                        else
+                        {
+                          echo '0';
+                        }
+                      ?></span>)</button></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-center">
+      <!-- <li><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Total: RM <?php if(isset($_SESSION['nav_total_price'])) { echo $_SESSION['nav_total_price']; }else{ echo "0";} ?></a>
+      </li> -->
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><input type="submit" name="place_order" value="Submit Order" class="btn btn-success btn-block"></li>
+    </ul>
+  </nav>
+  </form>
   <!-- FOOTER -->
   </main>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -334,7 +320,90 @@ $num_cat = mysqli_num_rows($result_cat);
     window.jQuery || document.write('<script src="assets/js/vendor/jquery.slim.min.js"><\/script>')
   </script>
   <script src="assets/dist/js/bootstrap.bundle.js"></script>
-  <script src="assets/dist/js/shoppingcart.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script>
+ //Jquery code to add product to Cart usign Ajax method  
+ $(document).ready(function(data){  
+      $('.add_to_cart').click(function(){  
+           var product_id = $(this).attr("id");  
+           var product_name = $('#name'+product_id).val();  
+           var product_price = $('#price'+product_id).val();  
+           var product_quantity = $('#quantity'+product_id).val();  
+           var action = "add";  
+           if(product_quantity > 0)  
+           {  
+                $.ajax({  
+                     url:"action.php",  
+                     method:"POST",  
+                     dataType:"json",  
+                     data:{  
+                          product_id:product_id,   
+                          product_name:product_name,   
+                          product_price:product_price,   
+                          product_quantity:product_quantity,   
+                          action:action  
+                     },  
+                     success:function(data)  
+                     {  
+                          $('#order_table').html(data.order_table);  
+                          $('.badge').text(data.cart_item);  
+                          alert("Product has been Added into Cart");  
+                     }  
+                });  
+           }  
+           else  
+           {  
+                alert("Please Enter atleast one quantity");  
+           }  
+      }); 
+
+//Jquery code to Remove product to Cart using Ajax method
+      $(document).on('click','.delete',function() {
+        var product_id = $(this).attr("id");
+        var action = "remove";
+        if (confirm("Are you sure you want to remove the product")) {
+          $.ajax({  
+                     url:"action.php",  
+                     method:"POST",  
+                     dataType:"json",  
+                     data:{  
+                          product_id:product_id,     
+                          action:action  
+                     },  
+                     success:function(data)  
+                     {  
+                          $('#order_table').html(data.order_table);  
+                          $('.badge').text(data.cart_item);  
+                         // alert("Product has been Added into Cart");  
+                     }  
+                });
+
+
+        }else {
+          return false;
+        }
+      });
+
+//Jquery code to live price update on  change of product quantity using Ajax method
+      $(document).on('keyup', '.quantity', function(){  
+           var product_id = $(this).data("product_id");  
+           var quantity = $(this).val();  
+           var action = "quantity_change";  
+           if(quantity != '')  
+           {  
+                $.ajax({  
+                     url :"action.php",  
+                     method:"POST",  
+                     dataType:"json",  
+                     data:{product_id:product_id, quantity:quantity, action:action},  
+                     success:function(data){  
+                          $('#order_table').html(data.order_table);  
+                     }  
+                });  
+           }  
+      });  
+ });  
+ </script>
 
 </body>
 

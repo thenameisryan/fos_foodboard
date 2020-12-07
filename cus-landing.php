@@ -7,6 +7,11 @@ $qry = "SELECT * FROM fos_landing
 $results = mysqli_query($db, $qry);
 $landing = mysqli_fetch_assoc($results);
 
+$qry_time = "SELECT * FROM fos_order 
+            WHERE client_uid = '".$_GET['r']."'";  
+$results_time = mysqli_query($db, $qry_time);
+$num_time = mysqli_num_rows($results_time);
+
 $qry_inqueue = "SELECT * FROM fos_landing 
             INNER JOIN fos_client ON fos_landing.client_uid = fos_client.uid
             INNER JOIN fos_queue ON fos_landing.client_uid = fos_queue.client_uid
@@ -19,11 +24,12 @@ $qry_queue = "SELECT * FROM fos_queue
 $result_queue = mysqli_query($db, $qry_queue);
 $num_queue = mysqli_num_rows($result_queue);
 
-$qry_queue2 = "SELECT * FROM fos_queue 
-					WHERE client_uid = '".$_GET['r']."'"; 
-$result_queue2 = mysqli_query($db, $qry_queue2);
-$num_queue2 = mysqli_num_rows($result_queue2);
-
+if(isset($_SESSION['inqnum2'])) {
+  $qry_queue2 = "SELECT * FROM fos_queue 
+            WHERE client_uid = '".$_GET['r']."' AND queue_number = '".$_SESSION['inqnum2']."'"; 
+  $result_queue2 = mysqli_query($db, $qry_queue2);
+  $num_queue2 = mysqli_num_rows($result_queue2);
+  }
 ?>
 
 <!doctype html>
@@ -85,7 +91,7 @@ $num_queue2 = mysqli_num_rows($result_queue2);
               <p><?php echo $landing['landing_desc'];?>
               </p>
               <h5><?php echo $landing['landing_location'];?></h5>
-              <h6><?php echo $landing['landing_contact'];?></h5>
+              <h6>Call <?php echo $landing['landing_contact'];?></h5>
             </div>
           </div>
         </div>
@@ -130,11 +136,11 @@ $num_queue2 = mysqli_num_rows($result_queue2);
               &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <img src="img/landing-icons/track.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
+          <!-- <img src="img/landing-icons/track.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
             xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
             aria-label="Placeholder: 140x140">
           <h2></h2>
-          <p><a class="btn btn-primary" href="#" role="button">Track Order &raquo;</a></p>
+          <p><a class="btn btn-primary" href="#" role="button">Track Order &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <img src="img/landing-icons/review.png" class="bd-placeholder-img rounded-circle" width="140" height="140"
@@ -210,16 +216,10 @@ $num_queue2 = mysqli_num_rows($result_queue2);
               <?php if($_SESSION['inqnum2'] == $inq2['queue_number']) { ?>
                 <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo "1";?></strong></span></span>
+                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo $inq2['queue_number'];?></strong></span></span>
                 </li>
               </ul>
-              <?php }else{?>
-                <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span style="font-size:18px;font-weight: bold;"> waiting in line : number <span style="text-decoration:underline;"><strong><?php echo $_SESSION['inqnum2'];?></strong></span></span>
-                </li>
-              </ul>
-              <?php } ?>
+              <?php }else{}?>
               <?php } ?>
           <?php } } ?>
           <ul class="list-group">
@@ -233,7 +233,7 @@ $num_queue2 = mysqli_num_rows($result_queue2);
             </li>
           <?php } ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span style="font-size:14px;"> estimated waiting time: <span style="text-decoration:underline;"><strong>15</strong></span> minutes </span>
+            <span style="font-size:14px;"> estimated waiting time: <span style="text-decoration:underline;"><strong><?php echo ($num_time * 8);?></strong></span> minutes </span>
             </li>
           </ul>
           <hr class="featurette-divider">
