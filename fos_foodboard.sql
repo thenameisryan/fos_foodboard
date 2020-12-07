@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2020 at 10:46 PM
+-- Generation Time: Dec 07, 2020 at 05:36 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -145,7 +145,7 @@ INSERT INTO `fos_landing` (`uid`, `client_uid`, `landing_desc`, `landing_locatio
 (10, 20, 'dw', 'dw', '(222) 222-2222', 'assets/landing-bg/sadge.jpg', '05-11-2020 04:49:18', ''),
 (11, 21, '', '', '', 'assets/landing-bg/smiling sun.jpg', '05-11-2020 04:56:55', ''),
 (12, 22, 'test', '', '', 'assets/landing-bg/sadge.jpg', '06-11-2020 17:24:48', ''),
-(13, 23, 'The patty is pan fried, grilled, smoked or flame broiled. Hamburgers are often served with cheese,\r\n                lettuce, tomato, onion, pickles, b', '1-1-22, Ideal Avenue, Medan Kampung Relau 1, Kampung Seberang Paya, 11900 Bayan Lepas, Pulau Pinang', '(012) 478-9987', 'assets/landing-bg/promo-bg.jpg', '07-11-2020 22:36:47', '07-11-2020 22:53:01'),
+(13, 23, 'We at Star Burger plan to establish a business structure that is transparent and simple. Our patty is pan fried, grilled, smoked or flame broiled. Our Hamburgers are often served with cheese, lettuce, tomato, onion, pickles, and our special sauce.', '1-1-22, Ideal Avenue, Medan Kampung Relau 1, Kampung Seberang Paya, 11900 Bayan Lepas, Pulau Pinang', '(012) 478-9987', 'assets/landing-bg/promo-bg.jpg', '07-11-2020 22:36:47', '07-12-2020 11:46:23'),
 (14, 24, 'admin_test1', 'penang,malaysia1', '222111', 'client/assets/landing-bg/sadge.jpg', '06-12-2020 00:44:38', '06-12-2020 02:36:06');
 
 -- --------------------------------------------------------
@@ -157,7 +157,6 @@ INSERT INTO `fos_landing` (`uid`, `client_uid`, `landing_desc`, `landing_locatio
 CREATE TABLE `fos_order` (
   `uid` int(5) NOT NULL,
   `client_uid` int(5) NOT NULL,
-  `order_number` int(5) NOT NULL,
   `order_cusid` int(5) NOT NULL,
   `order_status` varchar(50) NOT NULL,
   `date_created` varchar(50) NOT NULL,
@@ -168,10 +167,11 @@ CREATE TABLE `fos_order` (
 -- Dumping data for table `fos_order`
 --
 
-INSERT INTO `fos_order` (`uid`, `client_uid`, `order_number`, `order_cusid`, `order_status`, `date_created`, `date_edited`) VALUES
-(1, 23, 1, 1, 'COMPLETE', '13-11-2020 01:44:47', ''),
-(2, 23, 2, 2, 'PENDING', '13-11-2020 10:00:47', ''),
-(3, 23, 3, 3, 'PENDING', '13-11-2020 10:20:47', '');
+INSERT INTO `fos_order` (`uid`, `client_uid`, `order_cusid`, `order_status`, `date_created`, `date_edited`) VALUES
+(31, 23, 6254, 'PENDING', '07-12-2020 11:09:10', ''),
+(32, 23, 6424, 'PENDING', '07-12-2020 11:26:12', ''),
+(33, 23, 8681, 'PENDING', '07-12-2020 11:40:50', ''),
+(34, 23, 2859, 'PENDING', '07-12-2020 12:30:21', '');
 
 -- --------------------------------------------------------
 
@@ -181,12 +181,26 @@ INSERT INTO `fos_order` (`uid`, `client_uid`, `order_number`, `order_cusid`, `or
 
 CREATE TABLE `fos_orderitem` (
   `uid` int(5) NOT NULL,
-  `order_number` int(5) NOT NULL,
-  `prod_uid` int(5) NOT NULL,
+  `order_number` varchar(50) NOT NULL,
   `prod_name` varchar(50) NOT NULL,
   `prod_quantity` varchar(50) NOT NULL,
   `prod_price` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `fos_orderitem`
+--
+
+INSERT INTO `fos_orderitem` (`uid`, `order_number`, `prod_name`, `prod_quantity`, `prod_price`) VALUES
+(54, '31', 'Char Koay Teow', '1', '9'),
+(55, '31', 'Maggie goreng', '1', '10'),
+(56, '31', 'Chicken Rice', '1', '16.50'),
+(57, '32', 'Char Koay Teow', '2', '9'),
+(58, '32', 'Chicken Rice', '1', '16.50'),
+(59, '33', 'Cheeseburger', '1', '14'),
+(60, '33', 'Char Koay Teow', '1', '9'),
+(61, '34', 'Chicken Noodle', '1', '12'),
+(62, '34', 'Char Koay Teow', '1', '9');
 
 -- --------------------------------------------------------
 
@@ -236,7 +250,9 @@ INSERT INTO `fos_prod` (`uid`, `client_uid`, `prod_name`, `prod_image`, `prod_de
 (35, 23, 'Chicken Noodle', 'assets/uploads/chickennoodle.jpg', 'Chicken Soup ', '12', '08-11-2020 17:23:39', NULL),
 (36, 23, 'Spaghetti Carbonara', 'assets/uploads/carbonara.jpg', 'Smoked beef spaghetti carbonara is classic pasta dish for people that can\'t eat pork product.', '22', '13-11-2020 04:49:38', NULL),
 (37, 23, 'Chicken Chop', 'assets/uploads/cc.jpg', 'Served with brown sauce', '10', '13-11-2020 04:50:40', NULL),
-(38, 23, 'Char Koay Teow', 'assets/uploads/ckt.jpg', 'Chinese lap cheong (sausage), eggs, bean sprouts, and chives in a mix of soy sauce.', '9', '13-11-2020 04:52:17', NULL);
+(38, 23, 'Char Koay Teow', 'assets/uploads/ckt.jpg', 'Chinese lap cheong (sausage), eggs, bean sprouts, and chives in a mix of soy sauce.', '9', '13-11-2020 04:52:17', NULL),
+(39, 23, 'Maggie goreng', 'assets/uploads/mg.jpg', 'chicken, and veg', '10', '07-12-2020 10:58:00', NULL),
+(40, 23, 'Chicken Rice', 'assets/uploads/cr.jpg', 'soy sauce with oiled rice', '16.50', '07-12-2020 10:59:02', '07-12-2020 11:00:53');
 
 -- --------------------------------------------------------
 
@@ -260,9 +276,8 @@ CREATE TABLE `fos_queue` (
 --
 
 INSERT INTO `fos_queue` (`uid`, `client_uid`, `queue_number`, `queue_cus_name`, `queue_cus_contact`, `queue_cus_size`, `queue_status`, `date_created`) VALUES
-(149, 23, '1', 'dwd', '2', '2', 'READY', '03-12-2020 02:11:51'),
-(151, 23, '2', 'rdwd', '2', '2', 'WAITING', '03-12-2020 13:08:44'),
-(152, 23, '3', 'ddd', '213', '2', 'WAITING', '03-12-2020 13:10:23');
+(157, 23, '1', 'jp', '123', '22', 'READY', '07-12-2020 05:06:32'),
+(160, 23, '2', 'rytab', '23', '2', 'WAITING', '07-12-2020 05:10:21');
 
 -- --------------------------------------------------------
 
@@ -419,25 +434,25 @@ ALTER TABLE `fos_landing`
 -- AUTO_INCREMENT for table `fos_order`
 --
 ALTER TABLE `fos_order`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `fos_orderitem`
 --
 ALTER TABLE `fos_orderitem`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `fos_prod`
 --
 ALTER TABLE `fos_prod`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `fos_queue`
 --
 ALTER TABLE `fos_queue`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `fos_rcvrpass`
