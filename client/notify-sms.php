@@ -12,7 +12,7 @@
 	$MessageBird = new \MessageBird\Client($liveAPIkey);
 	$Message = new \MessageBird\Objects\Message();
 	$Message->originator = 'FoodBoard';
-	$Message->recipients = array(+60164157901);
+	$Message->recipients = array();//put your phone number here
 	$Message->body = $msgBody;
 
 	print_r(json_encode($MessageBird->messages->create($Message)));
