@@ -323,8 +323,8 @@ if (isset($_POST['forgot_password'])) {
     	$mail->Host = 'smtp.gmail.com';
     	$mail->Port = '465';
     	$mail->isHTML();
-    	$mail->Username = 'officialfoodboard@gmail.com';
-    	$mail->Password = 'foodboard2020';
+    	$mail->Username = ''; //gmail username
+    	$mail->Password = ''; //gmail password
     	$mail->SetFrom('no-reply@foodboard.com');
     	$mail->Subject = 'Reset your password on foodboard.com';
     	$mail->Body = $email_body;
